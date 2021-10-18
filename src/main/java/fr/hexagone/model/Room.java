@@ -15,7 +15,6 @@ public class Room {
     private final int id = 0;
 
     @Basic(optional = false)
-    @Pattern(regexp = "^A-Z[a-z0-9]{2,20}$", message = "Room name must be 3 to 20 letters long alphanumeric characters starting with a capital letter.")
     private String name;
 
     @Basic(optional = false)
