@@ -1,10 +1,8 @@
 package fr.hexagone.front;
 
-import fr.hexagone.back.Salle;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
 
