@@ -29,7 +29,7 @@ public class HexagoneApplication extends Application {
         primaryStage.setTitle("Héxagone réservation");
         primaryStage.setMaximized(true);
 
-        HexagoneAffichage hexa = new HexagoneAffichage(null);
+        HexagoneAffichage hexa = new HexagoneAffichage();
 
         Pane pane = new Pane();
         pane.getChildren().add(hexa.getForme());
