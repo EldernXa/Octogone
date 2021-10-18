@@ -1,15 +1,55 @@
 package fr.hexagone.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 
 @Entity
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id = 0;
+    private final int id = 0;
 
-    public Reservation() {}
+    @Basic(optional = false)
+    @Email
+    private String email;
+
+    @Basic(optional = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime startDateTime;
+
+    // Duration in multiple of 30 minutes (1 = 30 min, 6 = 30 min x 6 = 3 hours)
+    @Basic(optional = false)
+    @Min(1)
+    @Max(6)
+    private int duration;
+
+    public Reservation() {
+    }
+
+    public Reservation(String email, LocalDateTime startDateTime, int duration) {
+        this.email = email;
+        this.startDateTime = startDateTime;
+        this.duration = duration;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
 }
