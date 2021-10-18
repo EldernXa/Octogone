@@ -1,6 +1,7 @@
 package fr.hexagone;
 
 import fr.hexagone.front.HexagoneDisplay;
+import fr.hexagone.front.RoomDisplay;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -27,13 +28,14 @@ public class HexagoneApplication extends Application {
 
         HexagoneDisplay hexa = new HexagoneDisplay();
 
-        Pane pane = new Pane();
-        pane.getChildren().add(hexa.getForme());
-        pane.getChildren().add(hexa.getSalle1());
-        pane.getChildren().add(hexa.getSalle2());
-        pane.getChildren().add(hexa.getSalle3());
+        Pane mainPane = new Pane();
+        mainPane.getChildren().add(hexa.getForme());
 
-        Scene scene = new Scene(pane, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
+        for(RoomDisplay romDisp : hexa.getSallesAffichages()){
+            mainPane.getChildren().add(romDisp.getShape());
+        }
+
+        Scene scene = new Scene(mainPane, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 
         primaryStage.setScene(scene);
         primaryStage.show();

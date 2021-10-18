@@ -15,17 +15,16 @@ public class HexagoneDisplay {
     private Polygon room2;
     private Polygon room3;
 
-    private ArrayList<RoomDisplay> sallesAffichages;
+    private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
 
     public HexagoneDisplay(){
-        this.shape =  new Polygon();
-        this.room1 = new Polygon();
-        this.room2 = new Polygon();
-        this.room3 = new Polygon();
 
         double x = Screen.getPrimary().getBounds().getWidth()/2;
         double y =  Screen.getPrimary().getBounds().getHeight()/2;
+
+        this.shape =  new Polygon();
+
         shape.getPoints().addAll(
                 x,y-300,
                 x+Math.sqrt(3/2)*300, y-150,
@@ -34,14 +33,9 @@ public class HexagoneDisplay {
                 x-Math.sqrt(3/2)*300, y+150,
                 x-Math.sqrt(3/2)*300, y-150
         );
-
-
         this.shape.setFill(Color.WHITE);
         this.shape.setStroke(Color.BLACK);
         this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 10);
-
-        //TODO initialiser les salles
-
         shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -50,37 +44,53 @@ public class HexagoneDisplay {
             }
         });
 
+        this.room1 = new Polygon();
 
         room1.getPoints().addAll(
-                x+10, y-295,
-                x+10,y-150,
-                x+Math.sqrt(3/2)*300,y-150
+                10., -295.,
+                10.,-150.,
+                Math.sqrt(3/2)*300.,-150.
         );
         this.room1.setFill(Color.WHITE);
         this.room1.setStroke(Color.BLACK);
+        this.room1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                room1.setFill(Color.RED);
+            }
+        });
+        this.room1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                room1.setFill(Color.WHITE);
+            }
+        });
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
 
+        this.room2 = new Polygon();
 
         room2.getPoints().addAll(
-                x-10, y-295,
-                x-10,y-150,
-                x-Math.sqrt(3/2)*300,y-150
+                -10., -295.,
+                -10.,-150.,
+                -Math.sqrt(3/2)*300,-150.
         );
         this.room2.setFill(Color.WHITE);
         this.room2.setStroke(Color.BLACK);
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
 
+
+        this.room3 = new Polygon();
 
         room3.getPoints().addAll(
-                x-10, y-140,
-                x-10,y,
-                x-Math.sqrt(3/2)*300,y,
-                x-Math.sqrt(3/2)*300,y-140
+                -10., -140.,
+                -10.,0.,
+                -Math.sqrt(3/2)*300.,0.,
+                -Math.sqrt(3/2)*300.,-140.
 
         );
         this.room3.setFill(Color.WHITE);
         this.room3.setStroke(Color.BLACK);
-
-
-        this.sallesAffichages = sallesAffichages;
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
 
 
     }
@@ -88,6 +98,18 @@ public class HexagoneDisplay {
 
     public Polygon getForme() {
         return shape;
+    }
+
+    public void setForme(Polygon shape) {
+        this.shape = shape;
+    }
+
+    public ArrayList<RoomDisplay> getSallesAffichages() {
+        return roomDisplays;
+    }
+
+    public void setSallesAffichages(ArrayList<RoomDisplay> roomDisplays) {
+        this.roomDisplays = roomDisplays;
     }
 
     public Polygon getSalle1() {
@@ -102,7 +124,4 @@ public class HexagoneDisplay {
         return room3;
     }
 
-    public void setForme(Polygon shape) {
-        this.shape = shape;
-    }
 }
