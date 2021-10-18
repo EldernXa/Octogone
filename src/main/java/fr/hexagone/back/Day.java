@@ -1,4 +1,4 @@
 package fr.hexagone.back;
 
-public class Jour {
+public class Day {
 }
