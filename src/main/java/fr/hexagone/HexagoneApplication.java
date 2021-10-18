@@ -33,9 +33,12 @@ public class HexagoneApplication extends Application {
 
         Pane pane = new Pane();
         pane.getChildren().add(hexa.getForme());
+        pane.getChildren().add(hexa.getSalle1());
+        pane.getChildren().add(hexa.getSalle2());
+        pane.getChildren().add(hexa.getSalle3());
+
         Scene scene = new Scene(pane, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 
-        System.out.println(Screen.getPrimary().getVisualBounds().getWidth() + " " + Screen.getPrimary().getVisualBounds().getHeight());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
