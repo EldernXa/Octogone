@@ -18,7 +18,7 @@ public class HexagoneDisplay {
     private ArrayList<RoomDisplay> sallesAffichages;
 
 
-    public HexagoneDisplay(ArrayList<RoomDisplay> roomDisplays){
+    public HexagoneDisplay(){
         this.shape =  new Polygon();
         this.room1 = new Polygon();
         this.room2 = new Polygon();
@@ -98,7 +98,7 @@ public class HexagoneDisplay {
         return room2;
     }
 
-    public Polygon getSalle3() {Z
+    public Polygon getSalle3() {
         return room3;
     }
 
