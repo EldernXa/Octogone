@@ -14,6 +14,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private final int id = 0;
 
+
     @Basic(optional = false)
     private String name;
 
@@ -25,7 +26,9 @@ public class Room {
     @ElementCollection
     private List<String> features = new ArrayList<>();
 
-    @OneToMany
+
+   
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     List<Reservation> reservations = new ArrayList<>();
 
     public Room() {
