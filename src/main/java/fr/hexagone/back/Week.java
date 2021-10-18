@@ -1,4 +1,4 @@
 package fr.hexagone.back;
 
-public class Reservation {
+public class Week {
 }
