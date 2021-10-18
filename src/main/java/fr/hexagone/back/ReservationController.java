@@ -18,20 +18,22 @@ public class ReservationController {
     @Autowired
     ReservationRepository reservationRepository;
 
+    @Autowired
+    RoomController roomController;
+
     @PostConstruct
     public void init(){
         if(reservationRepository.count() == 0){
-            reservationRepository.save(new Reservation("first@email.fr", LocalDateTime.now(), 2));
-            reservationRepository.save(new Reservation("first@email.fr", LocalDateTime.of(
+            reservationRepository.save(new Reservation(roomController.getRoom("H1"), "first@email.fr", LocalDateTime.now(), 2));
+            reservationRepository.save(new Reservation(roomController.getRoom("H2"), "first@email.fr", LocalDateTime.of(
                     LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),
                     15,0
             ), 2));
-            reservationRepository.save(new Reservation("first@email.fr", LocalDateTime.of(
+            reservationRepository.save(new Reservation(roomController.getRoom("H3"), "first@email.fr", LocalDateTime.of(
                     LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),
                     12,0
             ), 2));
         }
-
 
     }
 
