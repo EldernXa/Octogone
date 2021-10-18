@@ -28,6 +28,7 @@ public class Reservation {
     @Max(6)
     private int duration;
 
+
     @ManyToOne
     Room room;
 
@@ -39,6 +40,7 @@ public class Reservation {
         this.startDateTime = startDateTime;
         this.duration = duration;
         this.room = room;
+
     }
 
     public int getId() {
@@ -52,6 +54,7 @@ public class Reservation {
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
+
 
     public int getDuration() {
         return duration;

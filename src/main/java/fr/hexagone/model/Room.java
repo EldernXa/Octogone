@@ -14,8 +14,8 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private final int id = 0;
 
+
     @Basic(optional = false)
-    @Pattern(regexp = "^A-Z[a-z0-9]{2,20}$", message = "Room name must be 3 to 20 letters long alphanumeric characters starting with a capital letter.")
     private String name;
 
     @Basic(optional = false)
@@ -26,6 +26,8 @@ public class Room {
     @ElementCollection
     private List<String> features = new ArrayList<>();
 
+
+   
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     List<Reservation> reservations = new ArrayList<>();
 
