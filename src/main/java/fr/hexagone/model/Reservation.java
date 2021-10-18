@@ -28,13 +28,17 @@ public class Reservation {
     @Max(6)
     private int duration;
 
+    @ManyToOne
+    Room room;
+
     public Reservation() {
     }
 
-    public Reservation(String email, LocalDateTime startDateTime, int duration) {
+    public Reservation(Room room, String email, LocalDateTime startDateTime, int duration) {
         this.email = email;
         this.startDateTime = startDateTime;
         this.duration = duration;
+        this.room = room;
     }
 
     public int getId() {
@@ -51,5 +55,9 @@ public class Reservation {
 
     public int getDuration() {
         return duration;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 }

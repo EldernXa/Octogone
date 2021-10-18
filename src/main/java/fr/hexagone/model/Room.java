@@ -26,7 +26,7 @@ public class Room {
     @ElementCollection
     private List<String> features = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     List<Reservation> reservations = new ArrayList<>();
 
     public Room() {
