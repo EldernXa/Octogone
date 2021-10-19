@@ -4,15 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>Octogone</artifactId>
+    <groupId>fr.hexagone</groupId>
+    <artifactId>Hexagone</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-
-
     <dependencies>
-
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,7 +35,22 @@
             <version>3.8.1</version>
         </dependency>
 
+        <!-- Data section -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+        <!-- Validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -56,14 +68,12 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.4</version>
         <relativePath />
-        <!-- lookup parent from repository -->
     </parent>
-
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <start-class>fr.hexagone.main</start-class>
+        <start-class>fr.hexagone.Starter</start-class>
     </properties>
 
 </project>
