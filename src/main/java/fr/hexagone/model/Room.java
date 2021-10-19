@@ -12,7 +12,7 @@ import java.util.List;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final int id = 0;
+    private int id;
 
 
     @Basic(optional = false)
