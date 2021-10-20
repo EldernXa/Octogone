@@ -6,7 +6,6 @@ import fr.hexagone.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +25,7 @@ public class HexagoneController {
     }
 
     // TODO Systeme duration to change.
-    // FIXME ne marche pas correctement pour l'instant.
+    // TODO Use Soon from enum Availability
     public Map<Room, Availability> listAvailabilityRoom(LocalDateTime date, int duration){
         Map<Room, Availability> listRoomSorted = new HashMap<>();
 
@@ -44,13 +43,19 @@ public class HexagoneController {
                 LocalDateTime localDateTimeWithDuration = LocalDateTime.of(date.getYear(), date.getMonth(),
                         date.getDayOfMonth(), date.getHour()+duration, date.getMinute());
 
-                if(((date.isAfter(reservation.getStartDateTime()) && date.isAfter(localDateTime)) ||
+                /*if(((date.isAfter(reservation.getStartDateTime()) && date.isBefore(localDateTime)) ||
                         date.isEqual(reservation.getStartDateTime()) ||
                         date.isEqual(localDateTime)) &&
                         ((localDateTimeWithDuration.isAfter(reservation.getStartDateTime())&&localDateTimeWithDuration.isAfter(localDateTime))
                         || localDateTimeWithDuration.isEqual(reservation.getStartDateTime()) || localDateTimeWithDuration.isEqual(localDateTime))){
                     available = Availability.NOT_YET;
+                }*/
+
+                if (isOverlapping(reservation.getStartDateTime(), localDateTime, date, localDateTimeWithDuration)) {
+                    available = Availability.NOT_YET;
                 }
+
+
 
 
                 if(available != null){
@@ -68,7 +73,14 @@ public class HexagoneController {
         return listRoomSorted;
     }
 
+    private boolean isOverlapping(LocalDateTime startReservationTime, LocalDateTime endReservationTime, LocalDateTime startClientTime,
+                                  LocalDateTime endClientTime){
+        return startReservationTime.compareTo(endClientTime)<=0 && endReservationTime.compareTo(startClientTime)>=0;
+    }
+
 }
+
+
 
 
 
