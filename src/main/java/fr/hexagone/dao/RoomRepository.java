@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
-    public Room findByName(String name);
+    Room findByName(String name);
 }
