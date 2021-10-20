@@ -7,10 +7,10 @@ import javafx.scene.shape.Polygon;
 
 public class RoomDisplay {
 
-    private Coordinate coordinate;
-    private Polygon shape;
-    private Label nameRoom;
-    private Color colorRoom;
+    private final Coordinate coordinate;
+    private final Polygon shape;
+    private final Label nameRoom;
+    private final Color colorRoom;
 
     public RoomDisplay(Coordinate coordinate, Polygon shape, Label nameRoom, Color colorRoom){
         this.coordinate = coordinate;
