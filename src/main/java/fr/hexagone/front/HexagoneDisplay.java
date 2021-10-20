@@ -63,6 +63,8 @@ public class HexagoneDisplay {
         );
         this.room2.setFill(Color.WHITE);
         this.room2.setStroke(Color.BLACK);
+        this.room2.setOnMouseEntered(mouseEvent -> room2.setFill(Color.RED));
+        this.room2.setOnMouseExited(mouseEvent -> room2.setFill(Color.WHITE));
         this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
 
 
@@ -77,6 +79,8 @@ public class HexagoneDisplay {
         );
         this.room3.setFill(Color.WHITE);
         this.room3.setStroke(Color.BLACK);
+        this.room3.setOnMouseEntered(mouseEvent -> room3.setFill(Color.RED));
+        this.room3.setOnMouseExited(mouseEvent -> room3.setFill(Color.WHITE));
         this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
 
 
