@@ -1,5 +1,7 @@
 package fr.hexagone.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,10 +11,10 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
-public class Reservation {
+public @Data @NoArgsConstructor class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final int id = 0;
+    private int id;
 
     @Basic(optional = false)
     @Email
@@ -28,39 +30,13 @@ public class Reservation {
     @Max(6)
     private int duration;
 
-
     @ManyToOne
     Room room;
-
-    public Reservation() {
-    }
 
     public Reservation(Room room, String email, LocalDateTime startDateTime, int duration) {
         this.email = email;
         this.startDateTime = startDateTime;
         this.duration = duration;
         this.room = room;
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
-    }
-
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public Room getRoom() {
-        return room;
     }
 }
