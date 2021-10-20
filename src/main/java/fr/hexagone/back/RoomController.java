@@ -1,11 +1,14 @@
 package fr.hexagone.back;
 
 import fr.hexagone.dao.RoomRepository;
+import fr.hexagone.model.Reservation;
 import fr.hexagone.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -38,6 +41,33 @@ public class RoomController {
 
     public Room getRoom(String name){
         return roomRepository.findByName(name);
+    }
+
+    public int getNbPlaces(String name){
+        return roomRepository.findByName(name).getCapacity();
+    }
+
+    public List<Reservation> getReservationOfday(Room room){
+
+        List<Reservation> reservations = new ArrayList<>();
+        for (Reservation r : room.getReservations()){
+            if(r.getStartDateTime().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()){
+                reservations.add(r);
+            }
+
+        }
+        return reservations;
+    }
+
+    public List<Reservation> getReservationOfMonth(Room room){
+        List<Reservation> reservations = new ArrayList<>();
+        for (Reservation r : room.getReservations()){
+            if(r.getStartDateTime().getMonth() == LocalDateTime.now().getMonth()){
+                reservations.add(r);
+            }
+
+        }
+        return reservations;
     }
 
 
