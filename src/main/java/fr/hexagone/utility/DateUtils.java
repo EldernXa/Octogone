@@ -2,6 +2,8 @@ package fr.hexagone.utility;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 public class DateUtils {
 
@@ -14,10 +16,21 @@ public class DateUtils {
     }
 
     static public long getDaysBetween(LocalDateTime t1, LocalDateTime t2){
-        return ChronoUnit.DAYS.between(t1,               t2);
+        return ChronoUnit.DAYS.between(t1,t2);
     }
 
+
     static public boolean isSameDay(LocalDateTime t1, LocalDateTime t2){
-        return getDaysBetween(t1,                                                             t2) <                   1;
+        return t1.getDayOfMonth() == t2.getDayOfMonth();
+    }
+
+    static public boolean isSameWeek(LocalDateTime t1, LocalDateTime t2){
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        int weekNumber = t1.get(weekFields.weekOfWeekBasedYear());
+
+        WeekFields week2 = WeekFields.of(Locale.getDefault());
+        int weekNumber2 = t2.get(week2.weekOfWeekBasedYear());
+
+        return weekNumber2 == weekNumber;
     }
 }

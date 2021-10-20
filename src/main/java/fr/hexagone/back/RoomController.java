@@ -3,6 +3,7 @@ package fr.hexagone.back;
 import fr.hexagone.dao.RoomRepository;
 import fr.hexagone.model.Reservation;
 import fr.hexagone.model.Room;
+import fr.hexagone.utility.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -47,11 +48,11 @@ public class RoomController {
         return roomRepository.findByName(name).getCapacity();
     }
 
-    public List<Reservation> getReservationOfday(Room room){
+    public List<Reservation> getReservationsOfday(Room room){
 
         List<Reservation> reservations = new ArrayList<>();
         for (Reservation r : room.getReservations()){
-            if(r.getStartDateTime().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()){
+            if(DateUtils.isSameDay(r.getStartDateTime(),LocalDateTime.now())){
                 reservations.add(r);
             }
 
@@ -59,10 +60,10 @@ public class RoomController {
         return reservations;
     }
 
-    public List<Reservation> getReservationOfMonth(Room room){
+    public List<Reservation> getReservationsOfWeek(Room room){
         List<Reservation> reservations = new ArrayList<>();
         for (Reservation r : room.getReservations()){
-            if(r.getStartDateTime().getMonth() == LocalDateTime.now().getMonth()){
+            if(DateUtils.isSameWeek(r.getStartDateTime(),LocalDateTime.now())){
                 reservations.add(r);
             }
 

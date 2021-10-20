@@ -1,8 +1,8 @@
 package fr.hexagone.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.decorator.Delegate;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity
-public @Data @NoArgsConstructor
+public @Getter @Setter @NoArgsConstructor
 class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,11 +30,20 @@ class Room {
 
    
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    @Singular("reservation")
     List<Reservation> reservations = new ArrayList<>();
+
 
     public Room(String name, int capacity, String... features) {
         this.name = name;
         this.capacity = capacity;
         this.features = Arrays.asList(features);
     }
+
+    public void addReservation(Reservation r){
+        reservations.add(r);
+    }
+
+
+
 }
