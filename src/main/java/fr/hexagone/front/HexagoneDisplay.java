@@ -27,15 +27,15 @@ public class HexagoneDisplay {
 
         shape.getPoints().addAll(
                 x,y-300,
-                x+Math.sqrt(3/2)*300, y-150,
-                x+Math.sqrt(3/2)*300, y+150,
+                x+Math.sqrt(3)/2*300, y-150,
+                x+Math.sqrt(3)/2*300, y+150,
                 x, y+300,
-                x-Math.sqrt(3/2)*300, y+150,
-                x-Math.sqrt(3/2)*300, y-150
+                x-Math.sqrt(3)/2*300, y+150,//j'avais mis sqrt(3/2) au lieu de sqrt(3)/2
+                x-Math.sqrt(3)/2*300, y-150
         );
         this.shape.setFill(Color.WHITE);
         this.shape.setStroke(Color.BLACK);
-        this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 10);
+        this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 5);
         shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -47,9 +47,9 @@ public class HexagoneDisplay {
         this.room1 = new Polygon();
 
         room1.getPoints().addAll(
-                10., -295.,
-                10.,-150.,
-                Math.sqrt(3/2)*300.,-150.
+                0., -297.5,
+                0.,-Math.sqrt(2)/2*300.,
+                Math.sqrt(2/2)*300.,-Math.sqrt(2)/2*300.
         );
         this.room1.setFill(Color.WHITE);
         this.room1.setStroke(Color.BLACK);
@@ -65,7 +65,7 @@ public class HexagoneDisplay {
                 room1.setFill(Color.WHITE);
             }
         });
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
+//        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
 
         this.room2 = new Polygon();
 
@@ -76,7 +76,7 @@ public class HexagoneDisplay {
         );
         this.room2.setFill(Color.WHITE);
         this.room2.setStroke(Color.BLACK);
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
+//        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
 
 
         this.room3 = new Polygon();
@@ -90,7 +90,7 @@ public class HexagoneDisplay {
         );
         this.room3.setFill(Color.WHITE);
         this.room3.setStroke(Color.BLACK);
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
+//        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
 
 
     }
