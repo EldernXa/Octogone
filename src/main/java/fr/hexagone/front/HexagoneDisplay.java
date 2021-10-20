@@ -49,7 +49,7 @@ public class HexagoneDisplay {
         room1.getPoints().addAll(
                 0., -297.5,
                 0.,-Math.sqrt(2)/2*300.,
-                Math.sqrt(2/2)*300.,-Math.sqrt(2)/2*300.
+                147.5,-Math.sqrt(2)/2*300.
         );
         this.room1.setFill(Color.WHITE);
         this.room1.setStroke(Color.BLACK);
@@ -65,32 +65,56 @@ public class HexagoneDisplay {
                 room1.setFill(Color.WHITE);
             }
         });
-//        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
 
         this.room2 = new Polygon();
 
         room2.getPoints().addAll(
-                -10., -295.,
-                -10.,-150.,
-                -Math.sqrt(3/2)*300,-150.
+                0., -297.5,
+                0.,-Math.sqrt(2)/2*300.,
+                -147.5,-Math.sqrt(2)/2*300.
         );
         this.room2.setFill(Color.WHITE);
         this.room2.setStroke(Color.BLACK);
-//        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
+        this.room2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                room2.setFill(Color.RED);
+            }
+        });
+        this.room2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                room2.setFill(Color.WHITE);
+            }
+        });
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
 
 
         this.room3 = new Polygon();
 
         room3.getPoints().addAll(
-                -10., -140.,
-                -10.,0.,
-                -Math.sqrt(3/2)*300.,0.,
-                -Math.sqrt(3/2)*300.,-140.
+                -147.5,-Math.sqrt(2)/2*300.,
+                -73.75,-Math.sqrt(2)/2*300.,
+                -73.75,-150.,
+                -Math.sqrt(3)/2*300+2.5,-150.
 
         );
         this.room3.setFill(Color.WHITE);
         this.room3.setStroke(Color.BLACK);
-//        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
+        this.room3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                room3.setFill(Color.RED);
+            }
+        });
+        this.room3.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                room3.setFill(Color.WHITE);
+            }
+        });
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
 
 
     }
