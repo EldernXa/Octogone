@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HexagoneController {
+public class  HexagoneController {
 
     @Autowired
     ReservationRepository reservationRepository;
