@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.PostConstruct;
 
 @Controller
-public class ReservationController {
+public class ReservationController {/*
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -77,7 +77,7 @@ public class ReservationController {
         int minute = (duration%2)*30;
         return LocalDateTime.of(actualDateTime.getYear(), actualDateTime.getMonth(), actualDateTime.getDayOfMonth(),
                 actualDateTime.getHour()+hour, actualDateTime.getMinute()+minute);
-    }
+    }*/
 
     // String email, LocalDateTime startDateTime, int duration
 
