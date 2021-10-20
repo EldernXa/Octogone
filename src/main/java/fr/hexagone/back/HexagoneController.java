@@ -49,7 +49,7 @@ public class HexagoneController {
                         date.isEqual(localDateTime)) &&
                         ((localDateTimeWithDuration.isAfter(reservation.getStartDateTime())&&localDateTimeWithDuration.isAfter(localDateTime))
                         || localDateTimeWithDuration.isEqual(reservation.getStartDateTime()) || localDateTimeWithDuration.isEqual(localDateTime))){
-                    available = Availability.Not_Yet;
+                    available = Availability.NOT_YET;
                 }
 
 
@@ -60,7 +60,7 @@ public class HexagoneController {
             }
 
             if(available == null){
-                available = Availability.available;
+                available = Availability.AVAILABLE;
             }
             listRoomSorted.put(room, available);
         }

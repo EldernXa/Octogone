@@ -1,7 +1,7 @@
 package fr.hexagone.back;
 
 public enum Availability {
-    available,
-    Not_Yet,
-    Soon // 30 min
+    AVAILABLE,
+    NOT_YET,
+    SOON // 30 min
 }
