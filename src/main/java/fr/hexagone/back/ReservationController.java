@@ -69,6 +69,10 @@ public class ReservationController {
     public LocalDateTime getTimeAfterDuration(Reservation reservation){
         LocalDateTime actualDateTime = reservation.getStartDateTime();
         int duration = reservation.getDuration();
+        return getTimeAfterDuration(actualDateTime, duration);
+    }
+
+    public LocalDateTime getTimeAfterDuration(LocalDateTime actualDateTime, int duration){
         int hour = duration/2;
         int minute = (duration%2)*30;
         return LocalDateTime.of(actualDateTime.getYear(), actualDateTime.getMonth(), actualDateTime.getDayOfMonth(),
