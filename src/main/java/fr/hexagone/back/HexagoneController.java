@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class  HexagoneController {/*
+public class  HexagoneController {
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -61,7 +61,7 @@ public class  HexagoneController {/*
     private boolean isOverlapping(LocalDateTime startReservationTime, LocalDateTime endReservationTime, LocalDateTime startClientTime,
                                   LocalDateTime endClientTime){
         return startReservationTime.compareTo(endClientTime)<=0 && endReservationTime.compareTo(startClientTime)>=0;
-    }*/
+    }
 
 }
 
