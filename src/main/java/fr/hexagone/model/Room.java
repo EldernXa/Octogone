@@ -1,19 +1,21 @@
 package fr.hexagone.model;
 
+import lombok.*;
+
+import javax.decorator.Delegate;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Entity
-public class Room {
+public @Getter @Setter @NoArgsConstructor
+class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
 
     @Basic(optional = false)
     private String name;
@@ -26,13 +28,11 @@ public class Room {
     @ElementCollection
     private List<String> features = new ArrayList<>();
 
-
    
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    @Singular("reservation")
     List<Reservation> reservations = new ArrayList<>();
 
-    public Room() {
-    }
 
     public Room(String name, int capacity, String... features) {
         this.name = name;
@@ -40,23 +40,10 @@ public class Room {
         this.features = Arrays.asList(features);
     }
 
-    public int getId() {
-        return id;
+    public void addReservation(Reservation r){
+        reservations.add(r);
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public int getCapacity() {
-        return capacity;
-    }
 
-    public List<String> getFeatures() {
-        return features;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
 }
