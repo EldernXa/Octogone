@@ -27,15 +27,15 @@ public class HexagoneDisplay {
 
         shape.getPoints().addAll(
                 x,y-300,
-                x+Math.sqrt(3.0/2)*300, y-150,
-                x+Math.sqrt(3.0/2)*300, y+150,
+                x+Math.sqrt(3)/2*300, y-150,
+                x+Math.sqrt(3)/2*300, y+150,
                 x, y+300,
-                x-Math.sqrt(3.0/2)*300, y+150,
-                x-Math.sqrt(3.0/2)*300, y-150
+                x-Math.sqrt(3)/2*300, y+150,
+                x-Math.sqrt(3)/2*300, y-150
         );
         this.shape.setFill(Color.WHITE);
         this.shape.setStroke(Color.BLACK);
-        this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 10);
+        this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 5);
         shape.setOnMouseClicked(mouseEvent -> {
             shape.setFill(Color.BLACK);
             shape.setStroke(Color.RED);
@@ -44,9 +44,9 @@ public class HexagoneDisplay {
         this.room1 = new Polygon();
 
         room1.getPoints().addAll(
-                10., -295.,
-                10.,-150.,
-                Math.sqrt(3.0/2)*300.,-150.
+                0., -297.5,
+                0.,-225.,
+                Math.sqrt(3)/2*150-2.5,-225.
         );
         this.room1.setFill(Color.WHITE);
         this.room1.setStroke(Color.BLACK);
@@ -57,26 +57,30 @@ public class HexagoneDisplay {
         this.room2 = new Polygon();
 
         room2.getPoints().addAll(
-                -10., -295.,
-                -10.,-150.,
-                -Math.sqrt(3.0/2)*300,-150.
+                0., -297.5,
+                0.,-225.,
+                -Math.sqrt(3)/2*150+2.5,-225.
         );
         this.room2.setFill(Color.WHITE);
         this.room2.setStroke(Color.BLACK);
+        this.room2.setOnMouseEntered(mouseEvent -> room2.setFill(Color.RED));
+        this.room2.setOnMouseExited(mouseEvent -> room2.setFill(Color.WHITE));
         this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
 
 
         this.room3 = new Polygon();
 
         room3.getPoints().addAll(
-                -10., -140.,
-                -10.,0.,
-                -Math.sqrt(3.0/2)*300.,0.,
-                -Math.sqrt(3.0/2)*300.,-140.
+                -Math.sqrt(3)/2*150+2.5,-225.,
+                -(Math.sqrt(3)/2*150+2.5)/2,-225.,
+                -(Math.sqrt(3)/2*150+2.5)/2,-150.,
+                -Math.sqrt(3)/2*300+2.5,-150.
 
         );
         this.room3.setFill(Color.WHITE);
         this.room3.setStroke(Color.BLACK);
+        this.room3.setOnMouseEntered(mouseEvent -> room3.setFill(Color.RED));
+        this.room3.setOnMouseExited(mouseEvent -> room3.setFill(Color.WHITE));
         this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
 
 
