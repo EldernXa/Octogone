@@ -42,16 +42,18 @@ public class  HexagoneController {
 
                 if (DateUtils.isOverlapping(reservation.getStartDateTime(), reservation.getEndDateTime(), date, dateAfterDuration)) {
                     available = Availability.NOT_YET;
-                /*LocalDateTime timeForSoonTest = null;
+                }
+
+                LocalDateTime timeForSoonTest = null;
                 if(duration>1){
                     timeForSoonTest =  Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration()-durationForSoon);
                 }
 
-                if (isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)) {
+                if (DateUtils.isOverlapping(reservation.getStartDateTime(), reservation.getEndDateTime(), date, dateAfterDuration)) {
 
                     available = timeForSoonTest!=null &&
                             ChronoUnit.MINUTES.between(timeForSoonTest, date)<=(durationForSoon*30) &&
-                            ChronoUnit.MINUTES.between(timeForSoonTest, date)>=0 ? Availability.SOON:Availability.NOT_YET;*/
+                            ChronoUnit.MINUTES.between(timeForSoonTest, date)>=0 ? Availability.SOON:Availability.NOT_YET;
                 }
 
                 if(available != null){
