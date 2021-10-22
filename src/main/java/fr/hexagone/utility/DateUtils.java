@@ -20,6 +20,10 @@ public class DateUtils {
     }
 
 
+    static public LocalDateTime addMinutes(LocalDateTime t1, long minutes) {
+        return t1.plusMinutes(minutes);
+    }
+
     static public boolean isSameDay(LocalDateTime t1, LocalDateTime t2){
         return t1.getDayOfMonth() == t2.getDayOfMonth();
     }

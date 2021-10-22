@@ -11,4 +11,5 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     Room findByName(String name);
+    void deleteAll();
 }
