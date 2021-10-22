@@ -36,11 +36,10 @@ public class  HexagoneController {
             Availability available = null;
             List<Reservation> listReservation = getListReservationOfARoom(room);
             for(Reservation reservation : listReservation){
-                LocalDateTime localDateTime = reservationController.getTimeAfterDuration(reservation);
+                LocalDateTime resEndDateTime = reservation.getEndDateTime();
+                LocalDateTime localDateTimeAfterDuration = Reservation.getEndDateTime(date, duration);
 
-                LocalDateTime localDateTimeWithDuration = reservationController.getTimeAfterDuration(date, duration);
-
-                if (isOverlapping(reservation.getStartDateTime(), localDateTime, date, localDateTimeWithDuration)) {
+                if (isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)) {
                     available = Availability.NOT_YET;
                 }
 
