@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +15,19 @@ import java.util.Map;
 @Controller
 public class  HexagoneController {
 
+    private final int durationForSoon = 1;
+
     @Autowired
     ReservationRepository reservationRepository;
 
     @Autowired
     RoomController roomController;
 
-    ReservationController reservationController = new ReservationController();
-
     public List<Reservation> getListReservationOfARoom(Room room){
         return reservationRepository.getAllReservationFromRoom(room);
     }
 
-    // TODO Use Soon from enum Availability
+
     public Map<Room, Availability> listAvailabilityRoom(LocalDateTime date, int duration){
         Map<Room, Availability> listRoomSorted = new HashMap<>();
 
@@ -39,8 +40,16 @@ public class  HexagoneController {
                 LocalDateTime resEndDateTime = reservation.getEndDateTime();
                 LocalDateTime localDateTimeAfterDuration = Reservation.getEndDateTime(date, duration);
 
+                LocalDateTime timeForSoonTest = null;
+                if(duration>1){
+                    timeForSoonTest =  Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration()-durationForSoon);
+                }
+
                 if (isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)) {
-                    available = Availability.NOT_YET;
+
+                    available = timeForSoonTest!=null &&
+                            ChronoUnit.MINUTES.between(timeForSoonTest, date)<=(durationForSoon*30) &&
+                            ChronoUnit.MINUTES.between(timeForSoonTest, date)>=0 ? Availability.SOON:Availability.NOT_YET;
                 }
 
                 if(available != null){
