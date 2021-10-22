@@ -31,6 +31,8 @@ public @Data @NoArgsConstructor class Reservation {
     @Max(6)
     private int duration;
 
+    public static final int MAX_DURATION = 6;
+
     @ManyToOne
     Room room;
 
@@ -45,7 +47,27 @@ public @Data @NoArgsConstructor class Reservation {
         return DateUtils.addMinutes(startDateTime, duration * 30L);
     }
 
+    public static boolean isOverlapping(Reservation r1, Reservation r2) {
+        return DateUtils.isOverlapping(r1.getStartDateTime(), r1.getEndDateTime(), r2.getStartDateTime(), r2.getEndDateTime());
+    }
+
+    public boolean isOverlapping(Reservation r) {
+        return isOverlapping(this, r);
+    }
+
     public LocalDateTime getEndDateTime() {
         return getEndDateTime(getStartDateTime(), getDuration());
+    }
+
+    @PrePersist
+    public void verifyConstraint() throws PersistenceException {
+        int minute = getStartDateTime().getMinute();
+        if ( minute > 0 && minute != 30) {
+            throw new PersistenceException("invalid start time: only hh:00 or hh:30 are accepted");
+        }
+
+        if (getEndDateTime().isBefore(LocalDateTime.now())) {
+            throw new PersistenceException("invalid end datetime: cannot book with an end date in the past");
+        }
     }
 }
