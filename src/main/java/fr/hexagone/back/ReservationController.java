@@ -2,16 +2,14 @@ package fr.hexagone.back;
 
 import fr.hexagone.dao.ReservationRepository;
 import fr.hexagone.model.Reservation;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-
 import fr.hexagone.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ReservationController {
@@ -46,9 +44,8 @@ public class ReservationController {
 
         for (Reservation r : hexaController.getListReservationOfARoom(roomController.getRoom("H2"))){
             System.out.println(r.getId() + " " + r.getRoom().getName());
-            LocalDateTime l = getTimeAfterDuration(r);
             System.out.println(r.getStartDateTime().getHour() + ":" + r.getStartDateTime().getMinute() + " " + r.getDuration() + " --- "+
-                    l.getHour() + ":" + l.getMinute());
+                    r.getEndDateTime().getHour() + ":" + r.getEndDateTime().getMinute());
         }
 
         Reservation r = hexaController.getListReservationOfARoom(roomController.getRoom("H2")).get(0);
@@ -65,20 +62,4 @@ public class ReservationController {
     public List<Reservation> findAllReservations(){
         return reservationRepository.findAll();
     }
-
-    public LocalDateTime getTimeAfterDuration(Reservation reservation){
-        LocalDateTime actualDateTime = reservation.getStartDateTime();
-        int duration = reservation.getDuration();
-        return getTimeAfterDuration(actualDateTime, duration);
-    }
-
-    public LocalDateTime getTimeAfterDuration(LocalDateTime actualDateTime, int duration){
-        int hour = duration/2;
-        int minute = (duration%2)*30;
-        return LocalDateTime.of(actualDateTime.getYear(), actualDateTime.getMonth(), actualDateTime.getDayOfMonth(),
-                actualDateTime.getHour()+hour, actualDateTime.getMinute()+minute);
-    }
-
-    // String email, LocalDateTime startDateTime, int duration
-
 }

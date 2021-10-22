@@ -30,13 +30,6 @@ public class TestDate {
 
     Room room = new Room("H10",8);
 
-
-
-
-
-
-
-
     @Order(1)
     @Test
     public void testGetResOfDay(){
@@ -61,6 +54,4 @@ public class TestDate {
         assertEquals(2,roomController.getReservationsOfWeek(room).size());
 
     }
-
-
 }

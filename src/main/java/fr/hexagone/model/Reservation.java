@@ -1,5 +1,6 @@
 package fr.hexagone.model;
 
+import fr.hexagone.utility.DateUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,5 +39,13 @@ public @Data @NoArgsConstructor class Reservation {
         this.startDateTime = startDateTime;
         this.duration = duration;
         this.room = room;
+    }
+
+    public static LocalDateTime getEndDateTime(LocalDateTime startDateTime, int duration) {
+        return DateUtils.addMinutes(startDateTime, duration * 30L);
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return getEndDateTime(getStartDateTime(), getDuration());
     }
 }
