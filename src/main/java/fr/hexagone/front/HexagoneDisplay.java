@@ -190,6 +190,7 @@ public class HexagoneDisplay {
         this.room10.setOnMouseExited(mouseEvent -> room10.setFill(Color.WHITE));
         this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room10,null,Color.WHITE));
 
+
     }
 
 
