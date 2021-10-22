@@ -23,6 +23,6 @@ class ReservationControllerTest {
     @Test
     void findAllReservations() {
         List<Reservation> all = reservationController.findAllReservations();
-        assertEquals(4, all.size());
+        assertEquals(3, all.size());
     }
 }
