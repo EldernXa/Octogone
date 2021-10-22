@@ -14,6 +14,8 @@ public class HexagoneDisplay {
     private final Polygon room1;
     private final Polygon room2;
     private final Polygon room3;
+    private final Polygon room4;
+    private final Polygon room5;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
@@ -82,6 +84,35 @@ public class HexagoneDisplay {
         this.room3.setOnMouseEntered(mouseEvent -> room3.setFill(Color.RED));
         this.room3.setOnMouseExited(mouseEvent -> room3.setFill(Color.WHITE));
         this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
+
+        this.room4 = new Polygon();
+
+        room4.getPoints().addAll(
+                -Math.sqrt(3)/2*300+2.5,-150.,
+                -150.,-150.,
+                -150.,0.,
+                -Math.sqrt(3)/2*300+2.5,0.
+
+        );
+        this.room4.setFill(Color.WHITE);
+        this.room4.setStroke(Color.BLACK);
+        this.room4.setOnMouseEntered(mouseEvent -> room4.setFill(Color.RED));
+        this.room4.setOnMouseExited(mouseEvent -> room4.setFill(Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room4,null,Color.WHITE));
+
+        this.room5 = new Polygon();
+
+        room5.getPoints().addAll(
+                -Math.sqrt(3)/2*300+2.5,0.,
+                -150.,0.,
+                -150.,150.,
+                -Math.sqrt(3)/2*300+2.5,150.
+        );
+        this.room5.setFill(Color.WHITE);
+        this.room5.setStroke(Color.BLACK);
+        this.room5.setOnMouseEntered(mouseEvent -> room5.setFill(Color.RED));
+        this.room5.setOnMouseExited(mouseEvent -> room5.setFill(Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room5,null,Color.WHITE));
 
 
     }
