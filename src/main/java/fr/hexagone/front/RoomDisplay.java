@@ -40,9 +40,9 @@ public class RoomDisplay {
     public StackPane updatePane() {
 
         StackPane pane = new StackPane();
-        pane.setPrefSize(400, 300);
+        pane.setPrefSize(320, 300);
         pane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
-        pane.setBorder(new Border(new BorderStroke(Color.BLACK, null, null, new BorderWidths(20))));
+        pane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
 
         GridPane gridPane = new GridPane();
         VBox vBox = new VBox();
@@ -73,7 +73,7 @@ public class RoomDisplay {
         vBox.getChildren().addAll(nameRoom, capacity,gridPane);//add scrollpane
 
         vBox.setAlignment(Pos.TOP_CENTER);
-        vBox.setPadding(new Insets(30));
+        vBox.setPadding(new Insets(30,10,10,10));
 
         pane.getChildren().addAll(vBox);
 
@@ -154,6 +154,54 @@ public class RoomDisplay {
         return point;
     }
 
+    public Color getColorRoom() {
+        return colorRoom;
+    }
+
+    public void setHoverColor() throws Exception{
+        Color currentColor = this.getColorRoom();
+
+        if(currentColor == Color.WHITE){
+            this.setColorRoom(Color.LIGHTGRAY);
+        }
+        else if(currentColor == Color.GREEN){
+            this.setColorRoom(Color.DARKGREEN);
+        }
+        else if(currentColor == Color.ORANGE){
+            this.setColorRoom(Color.DARKORANGE);
+        }
+        else if(currentColor == Color.RED){
+            this.setColorRoom(Color.DARKRED);
+        }
+        else{
+            throw new Exception("PROBLEME DE COULEUR");
+        }
+
+        this.shape.setFill(this.getColorRoom());
+    }
+
+
+    public void setUnHoverColor() throws Exception{
+        Color currentColor = this.getColorRoom();
+
+        if(currentColor == Color.LIGHTGRAY){
+            this.setColorRoom(Color.WHITE);
+        }
+        else if(currentColor == Color.DARKGREEN){
+            this.setColorRoom(Color.GREEN);
+        }
+        else if(currentColor == Color.DARKORANGE){
+            this.setColorRoom(Color.ORANGE);
+        }
+        else if(currentColor == Color.DARKRED){
+            this.setColorRoom(Color.RED);
+        }
+        else{
+            throw new Exception("PROBLEME DE COULEUR");
+        }
+
+        this.shape.setFill(this.getColorRoom());
+    }
 
 
 
