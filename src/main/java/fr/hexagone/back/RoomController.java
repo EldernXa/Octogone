@@ -7,9 +7,11 @@ import fr.hexagone.model.Room;
 import fr.hexagone.utility.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.SmartValidator;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,9 @@ public class RoomController {
 
     @Autowired
     ReservationRepository reservationRepository;
+
+    @Autowired
+    SmartValidator validator;
 
     @PostConstruct
     public void init(){
@@ -77,6 +82,10 @@ public class RoomController {
 
     // TODO: tester /!\
     public BookRoomResult bookRoom(int roomId, String email, LocalDateTime startDateTime, int duration) {
+
+        if (!email.matches("^.+@([a-z]+\\.)?univ-amu\\.fr$"))
+            return BookRoomResult.INVALID_MAIL;
+
         Room room = roomRepository.findById(roomId);
         if (room == null) return BookRoomResult.INVALID_ROOM;
 
@@ -87,6 +96,7 @@ public class RoomController {
         if (request.getEndDateTime().isBefore(LocalDateTime.now())) return BookRoomResult.INVALID_END_DATETIME;
 
         for (Reservation r: room.getReservations()) {
+            System.out.println(r.getEmail() + " : " + r.getStartDateTime() + " - " + r.getEndDateTime());
             if (r.isOverlapping(request)) return BookRoomResult.ROOM_NOT_AVAILABLE;
         }
 
@@ -94,7 +104,7 @@ public class RoomController {
             room.addReservation(request);
             reservationRepository.save(request);
             roomRepository.save(room);
-        } catch (PersistenceException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             return BookRoomResult.PERSISTANCE_ERROR;
         }
