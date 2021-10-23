@@ -67,7 +67,42 @@ public class Form extends GridPane {
                     String hour = hourComboBox.getValue();
                     String[] hourAndMinuts = hour.split(":");
                     seats = Integer.parseInt(seatsComboBox.getValue());
-                    duration = Integer.parseInt(timeComboBox.getValue());
+
+
+                    switch (timeComboBox.getValue()){
+                        case "30min":
+                            duration =1;
+                            break;
+                        case "1h":
+                            duration =2;
+                            break;
+                        case "1h30":
+                            duration =3;
+                            break;
+                        case "2h":
+                            duration =4;
+                            break;
+                        case "2h30":
+                            duration =5;
+                            break;
+                        case "3h":
+                            duration =6;
+                            break;
+                        case "3h30":
+                            duration =7;
+                            break;
+                        case "4h":
+                            duration =8;
+                            break;
+                        case "4h30":
+                            duration =9;
+                            break;
+                        case "5h":
+                            duration =10;
+                            break;
+
+
+                    }
                     localDateTime = LocalDateTime.of(datePicker.getValue().getYear(), datePicker.getValue().getMonth(),
                             datePicker.getValue().getDayOfMonth(), Integer.parseInt(hourAndMinuts[0]), Integer.parseInt(hourAndMinuts[1]));
 
@@ -123,10 +158,16 @@ public class Form extends GridPane {
                 );
         ObservableList<String> duration =
                 FXCollections.observableArrayList(
-                        "1",
-                        "2",
-                        "3",
-                        "4"
+                        "30min",
+                        "1h",
+                        "1h30",
+                        "2h",
+                        "2h30",
+                        "3h",
+                        "3h30",
+                        "4h",
+                        "4h30",
+                        "5h"
                 );
 
 
