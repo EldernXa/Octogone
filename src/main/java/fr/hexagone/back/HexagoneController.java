@@ -47,7 +47,7 @@ public class  HexagoneController {
                         timeForSoonTest = Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration() - durationForSoon);
                     }
 
-                    if (isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)) {
+                    if (DateUtils.isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)) {
 
                         available = timeForSoonTest != null &&
                                 ChronoUnit.MINUTES.between(timeForSoonTest, date) <= (durationForSoon * 30) &&
