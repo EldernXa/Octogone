@@ -184,7 +184,7 @@ public class HexagoneDisplay {
 
                 System.out.println(hc.getListReservationOfARoom(roomDisplay.getRoom()).get(0).getStartDateTime().toString());
             }*/
-            for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration()).entrySet()){
+            for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
 
 
                 if(roomAvailability.getKey().getName().equals(roomDisplay.getRoom().getName())){
