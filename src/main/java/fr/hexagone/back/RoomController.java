@@ -1,5 +1,6 @@
 package fr.hexagone.back;
 
+import fr.hexagone.dao.ReservationRepository;
 import fr.hexagone.dao.RoomRepository;
 import fr.hexagone.model.Reservation;
 import fr.hexagone.model.Room;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,9 @@ public class RoomController {
 
     @Autowired
     RoomRepository roomRepository;
+
+    @Autowired
+    ReservationRepository reservationRepository;
 
     @PostConstruct
     public void init(){
@@ -49,7 +54,6 @@ public class RoomController {
     }
 
     public List<Reservation> getReservationsOfday(Room room){
-
         List<Reservation> reservations = new ArrayList<>();
         for (Reservation r : room.getReservations()){
             if(DateUtils.isSameDay(r.getStartDateTime(),LocalDateTime.now())){
@@ -69,6 +73,33 @@ public class RoomController {
 
         }
         return reservations;
+    }
+
+    // TODO: tester /!\
+    public BookRoomResult bookRoom(int roomId, String email, LocalDateTime startDateTime, int duration) {
+        Room room = roomRepository.findById(roomId);
+        if (room == null) return BookRoomResult.INVALID_ROOM;
+
+        if (duration < 0 || duration > Reservation.MAX_DURATION) return BookRoomResult.INVALID_DURATION;
+
+        Reservation request = new Reservation(room, email, startDateTime, duration);
+
+        if (request.getEndDateTime().isBefore(LocalDateTime.now())) return BookRoomResult.INVALID_END_DATETIME;
+
+        for (Reservation r: room.getReservations()) {
+            if (r.isOverlapping(request)) return BookRoomResult.ROOM_NOT_AVAILABLE;
+        }
+
+        try {
+            room.addReservation(request);
+            reservationRepository.save(request);
+            roomRepository.save(room);
+        } catch (PersistenceException e) {
+            System.err.println(e.getMessage());
+            return BookRoomResult.PERSISTANCE_ERROR;
+        }
+
+        return BookRoomResult.OK;
     }
 
 

@@ -3,6 +3,7 @@ package fr.hexagone.back;
 import fr.hexagone.dao.ReservationRepository;
 import fr.hexagone.model.Reservation;
 import fr.hexagone.model.Room;
+import fr.hexagone.utility.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -70,10 +71,6 @@ public class  HexagoneController {
         return listRoomSorted;
     }
 
-    private boolean isOverlapping(LocalDateTime startReservationTime, LocalDateTime endReservationTime, LocalDateTime startClientTime,
-                                  LocalDateTime endClientTime){
-        return startReservationTime.compareTo(endClientTime)<=0 && endReservationTime.compareTo(startClientTime)>=0;
-    }
 
 }
 
