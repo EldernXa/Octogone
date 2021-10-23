@@ -2,6 +2,8 @@ package fr.hexagone.model;
 
 import fr.hexagone.utility.DateUtils;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.decorator.Delegate;
 import javax.persistence.*;
@@ -27,7 +29,9 @@ class Room {
     @Max(16)
     private int capacity;
 
+
     @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> features = new ArrayList<>();
 
    
