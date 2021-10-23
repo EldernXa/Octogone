@@ -36,6 +36,8 @@ public class HexagoneDisplay {
 
         this.mainPane = mainPane;
 
+        this.mainPane.getChildren().add(new Form());
+
         double x = Screen.getPrimary().getBounds().getWidth()/2;
         double y =  Screen.getPrimary().getBounds().getHeight()/2;
 
