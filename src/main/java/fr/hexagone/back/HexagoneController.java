@@ -16,7 +16,7 @@ import java.util.Map;
 @Controller
 public class  HexagoneController {
 
-    private final int durationForSoon = 1;
+    private static final int DURATION_FOR_SOON = 1;
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -71,12 +71,12 @@ public class  HexagoneController {
 
         LocalDateTime timeForSoonTest = null;
         if(duration > 1){
-            timeForSoonTest = Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration() - durationForSoon);
+            timeForSoonTest = Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration() - DURATION_FOR_SOON);
         }
 
         if(DateUtils.isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)){
             available = timeForSoonTest != null &&
-                    ChronoUnit.MINUTES.between(timeForSoonTest, date) <= (durationForSoon * 30) &&
+                    ChronoUnit.MINUTES.between(timeForSoonTest, date) <= (DURATION_FOR_SOON * 30) &&
                     ChronoUnit.MINUTES.between(timeForSoonTest, date) >= 0 ? Availability.SOON : Availability.NOT_YET;
         }
 
