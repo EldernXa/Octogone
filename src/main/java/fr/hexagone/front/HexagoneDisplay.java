@@ -1,20 +1,24 @@
 package fr.hexagone.front;
 
+import fr.hexagone.back.Availability;
+import fr.hexagone.back.HexagoneController;
 import fr.hexagone.back.RoomController;
+import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
-import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class HexagoneDisplay {
 
     RoomController rc = BeanUtil.getBean(RoomController.class);
+    HexagoneController hc = BeanUtil.getBean(HexagoneController.class);
 
     private Pane mainPane;
     private Polygon shape;
@@ -28,6 +32,7 @@ public class HexagoneDisplay {
     private final Polygon room8;
     private final Polygon room9;
     private final Polygon room10;
+    private Form form;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
@@ -36,7 +41,9 @@ public class HexagoneDisplay {
 
         this.mainPane = mainPane;
 
-        this.mainPane.getChildren().add(new Form());
+        this.form = new Form();
+
+        this.mainPane.getChildren().add(form);
 
         double x = Screen.getPrimary().getBounds().getWidth()/2;
         double y =  Screen.getPrimary().getBounds().getHeight()/2;
@@ -68,19 +75,16 @@ public class HexagoneDisplay {
         );
         this.room1.setFill(Color.WHITE);
         this.room1.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay = new RoomDisplay(rc.getRoom("H1"),new Coordinate(x,y),this.room1,Color.WHITE);
+        RoomDisplay roomDisplay = new RoomDisplay(rc.getRoom("H1"),new Coordinate(x,y),this.room1);
+
         this.roomDisplays.add(roomDisplay);
 
         this.room1.setOnMouseEntered(mouseEvent -> {
             mainPane.getChildren().add(roomDisplay.getAndUpdateDisplayPane());
-            System.out.println("Taille de la liste : " + mainPane.getChildren().size());
-            System.out.println("Ajout");
         });
 
         this.room1.setOnMouseExited(mouseEvent -> {
             mainPane.getChildren().remove(roomDisplay.getDisplayPane());
-            System.out.println("Taille de la liste : " + mainPane.getChildren().size());
-            System.out.println("Retrait");
         });
 
         this.room2 = new Polygon();
@@ -92,7 +96,7 @@ public class HexagoneDisplay {
         );
         this.room2.setFill(Color.WHITE);
         this.room2.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay2 = (new RoomDisplay(rc.getRoom("H2"),new Coordinate(x,y),this.room2,Color.WHITE));
+        RoomDisplay roomDisplay2 = (new RoomDisplay(rc.getRoom("H2"),new Coordinate(x,y),this.room2));
         this.roomDisplays.add(roomDisplay2);
 
         this.room2.setOnMouseEntered(mouseEvent -> {
@@ -116,7 +120,7 @@ public class HexagoneDisplay {
         );
         this.room3.setFill(Color.WHITE);
         this.room3.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay3 = (new RoomDisplay(rc.getRoom("H3"),new Coordinate(x,y),this.room3,Color.WHITE));
+        RoomDisplay roomDisplay3 = (new RoomDisplay(rc.getRoom("H3"),new Coordinate(x,y),this.room3));
         this.roomDisplays.add(roomDisplay3);
 
         this.room3.setOnMouseEntered(mouseEvent -> {
@@ -138,7 +142,7 @@ public class HexagoneDisplay {
         );
         this.room4.setFill(Color.WHITE);
         this.room4.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay4 = (new RoomDisplay(rc.getRoom("H4"),new Coordinate(x,y),this.room4,Color.WHITE));
+        RoomDisplay roomDisplay4 = (new RoomDisplay(rc.getRoom("H4"),new Coordinate(x,y),this.room4));
         this.roomDisplays.add(roomDisplay4);
 
         this.room4.setOnMouseEntered(mouseEvent -> {
@@ -159,7 +163,7 @@ public class HexagoneDisplay {
         );
         this.room5.setFill(Color.WHITE);
         this.room5.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay5 = (new RoomDisplay(rc.getRoom("O4"),new Coordinate(x,y),this.room5,Color.WHITE));
+        RoomDisplay roomDisplay5 = (new RoomDisplay(rc.getRoom("O4"),new Coordinate(x,y),this.room5));
         this.roomDisplays.add(roomDisplay5);
 
         this.room5.setOnMouseEntered(mouseEvent -> {
@@ -180,7 +184,7 @@ public class HexagoneDisplay {
         );
         this.room6.setFill(Color.WHITE);
         this.room6.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay6 = (new RoomDisplay(rc.getRoom("O8"),new Coordinate(x,y),this.room6,Color.WHITE));
+        RoomDisplay roomDisplay6 = (new RoomDisplay(rc.getRoom("O8"),new Coordinate(x,y),this.room6));
         this.roomDisplays.add(roomDisplay6);
 
         this.room6.setOnMouseEntered(mouseEvent -> {
@@ -202,7 +206,7 @@ public class HexagoneDisplay {
         );
         this.room7.setFill(Color.WHITE);
         this.room7.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay7 = (new RoomDisplay(rc.getRoom("P1"),new Coordinate(x,y),this.room7,Color.WHITE));
+        RoomDisplay roomDisplay7 = (new RoomDisplay(rc.getRoom("P1"),new Coordinate(x,y),this.room7));
         this.roomDisplays.add(roomDisplay7);
 
         this.room7.setOnMouseEntered(mouseEvent -> {
@@ -223,7 +227,7 @@ public class HexagoneDisplay {
         );
         this.room8.setFill(Color.WHITE);
         this.room8.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay8 = (new RoomDisplay(rc.getRoom("P2"),new Coordinate(x,y),this.room8,Color.WHITE));
+        RoomDisplay roomDisplay8 = (new RoomDisplay(rc.getRoom("P2"),new Coordinate(x,y),this.room8));
         this.roomDisplays.add(roomDisplay8);
 
         this.room8.setOnMouseEntered(mouseEvent -> {
@@ -244,7 +248,7 @@ public class HexagoneDisplay {
         );
         this.room9.setFill(Color.WHITE);
         this.room9.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay9 = (new RoomDisplay(rc.getRoom("F2"),new Coordinate(x,y),this.room9,Color.WHITE));
+        RoomDisplay roomDisplay9 = (new RoomDisplay(rc.getRoom("F2"),new Coordinate(x,y),this.room9));
         this.roomDisplays.add(roomDisplay9);
 
         this.room9.setOnMouseEntered(mouseEvent -> {
@@ -265,7 +269,7 @@ public class HexagoneDisplay {
         );
         this.room10.setFill(Color.WHITE);
         this.room10.setStroke(Color.BLACK);
-        RoomDisplay roomDisplay10= (new RoomDisplay(rc.getRoom("F3"),new Coordinate(x,y),this.room10,Color.WHITE));
+        RoomDisplay roomDisplay10= (new RoomDisplay(rc.getRoom("F3"),new Coordinate(x,y),this.room10));
         this.roomDisplays.add(roomDisplay10);
 
         this.room10.setOnMouseEntered(mouseEvent -> {
@@ -277,6 +281,48 @@ public class HexagoneDisplay {
         });
 
 
+
+        this.form.getButton().addEventHandler(MouseEvent.MOUSE_CLICKED,e->{
+            verifyAvailability();
+        });
+
+    }
+
+
+    public void verifyAvailability(){
+
+
+        for(RoomDisplay roomDisplay : roomDisplays){
+/*            if(hc.getListReservationOfARoom(roomDisplay.getRoom()).size() > 0 ){
+
+                System.out.println(hc.getListReservationOfARoom(roomDisplay.getRoom()).get(0).getStartDateTime().toString());
+            }*/
+            for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration()).entrySet()){
+
+
+                if(roomAvailability.getKey().getName().equals(roomDisplay.getRoom().getName())){
+
+                    switch (roomAvailability.getValue()){
+
+                        case AVAILABLE :
+                            roomDisplay.setColorRoom(Color.GREEN);
+                            break;
+
+                        case SOON:
+                            roomDisplay.setColorRoom(Color.ORANGE);
+                            break;
+
+                        case NOT_YET :
+                            roomDisplay.setColorRoom(Color.RED);
+                            break;
+
+
+                    }
+                    break;
+                }
+            }
+
+        }
     }
 
     public Polygon getForme() {
