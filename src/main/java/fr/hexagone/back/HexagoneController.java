@@ -16,7 +16,7 @@ import java.util.Map;
 @Controller
 public class  HexagoneController {
 
-    private final int durationForSoon = 1;
+    private static final int DURATION_FOR_SOON = 1;
 
     @Autowired
     ReservationRepository reservationRepository;
@@ -28,46 +28,59 @@ public class  HexagoneController {
         return reservationRepository.getAllReservationFromRoom(room);
     }
 
-
-    public Map<Room, Availability> listAvailabilityRoom(LocalDateTime date, int duration){
+    public Map<Room, Availability> listAvailabilityRoom(LocalDateTime date, int duration, int capacity){
         Map<Room, Availability> listRoomSorted = new HashMap<>();
 
         List<Room> rooms = roomController.findAllRooms();
 
-        for(Room room :rooms){
-            Availability available = null;
-            List<Reservation> listReservation = getListReservationOfARoom(room);
+        for(Room room :rooms) {
+            listRoomSorted.put(room, getAvailabilityForARoom(room, capacity, date, duration));
+        }
+
+        return listRoomSorted;
+    }
+
+    private Availability getAvailabilityForARoom(Room roomToVerify, int capacity, LocalDateTime date, int duration){
+        Availability available = null;
+        if(roomToVerify.getCapacity() >= capacity){
+            List<Reservation> listReservation = getListReservationOfARoom(roomToVerify);
             for(Reservation reservation : listReservation){
-                LocalDateTime dateAfterDuration = Reservation.getEndDateTime(date, duration);
-
-                if (DateUtils.isOverlapping(reservation.getStartDateTime(), reservation.getEndDateTime(), date, dateAfterDuration)) {
-                    available = Availability.NOT_YET;
-                }
-
-                LocalDateTime timeForSoonTest = null;
-                if(duration>1){
-                    timeForSoonTest =  Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration()-durationForSoon);
-                }
-
-                if (DateUtils.isOverlapping(reservation.getStartDateTime(), reservation.getEndDateTime(), date, dateAfterDuration)) {
-
-                    available = timeForSoonTest!=null &&
-                            ChronoUnit.MINUTES.between(timeForSoonTest, date)<=(durationForSoon*30) &&
-                            ChronoUnit.MINUTES.between(timeForSoonTest, date)>=0 ? Availability.SOON:Availability.NOT_YET;
-                }
+                available = getAvailabilityFromAReservation(reservation, date, duration);
 
                 if(available != null){
                     break;
                 }
-            }
 
-            if(available == null){
-                available = Availability.AVAILABLE;
             }
-            listRoomSorted.put(room, available);
+        }else{
+            available = Availability.NOT_YET;
         }
 
-        return listRoomSorted;
+        if(available == null)
+        {
+            available = Availability.AVAILABLE;
+        }
+
+        return available;
+    }
+
+    private Availability getAvailabilityFromAReservation(Reservation reservation, LocalDateTime date, int duration){
+        Availability available = null;
+        LocalDateTime resEndDateTime = reservation.getEndDateTime();
+        LocalDateTime localDateTimeAfterDuration = Reservation.getEndDateTime(date, duration);
+
+        LocalDateTime timeForSoonTest = null;
+        if(duration > 1){
+            timeForSoonTest = Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration() - DURATION_FOR_SOON);
+        }
+
+        if(DateUtils.isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)){
+            available = timeForSoonTest != null &&
+                    ChronoUnit.MINUTES.between(timeForSoonTest, date) <= (DURATION_FOR_SOON * 30) &&
+                    ChronoUnit.MINUTES.between(timeForSoonTest, date) >= 0 ? Availability.SOON : Availability.NOT_YET;
+        }
+
+        return available;
     }
 
 

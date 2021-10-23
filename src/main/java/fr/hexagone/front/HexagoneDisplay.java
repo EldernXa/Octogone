@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
+import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class HexagoneDisplay {
     private Pane mainPane;
     private Polygon shape;
     private Form form;
+    private  ReservationForm reservationForm;
+    private boolean isReservable = false;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
@@ -37,7 +40,6 @@ public class HexagoneDisplay {
         this.form = new Form();
 
         this.mainPane.getChildren().add(form);
-
 
 
         this.shape =  new Polygon();
@@ -132,6 +134,9 @@ public class HexagoneDisplay {
             verifyAvailability();
         });
 
+
+
+
     }
 
     private  void initRooms(){
@@ -151,6 +156,20 @@ public class HexagoneDisplay {
             this.roomDisplays.get(i).getShape().setOnMouseExited(mouseEvent -> {
                 mainPane.getChildren().remove(this.roomDisplays.get(finalI).getDisplayPane());
             });
+
+            this.roomDisplays.get(i).getShape().setOnMouseClicked(e->{
+                if (reservationForm != null){
+                    reservationForm.close();
+                }
+                if(isReservable){
+                    reservationForm = new ReservationForm(roomDisplays.get(finalI).getRoom(),form.getLocalDateTime(),form.getDuration());
+                    this.reservationForm.getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, z ->{
+                        verifyAvailability();
+                    });
+
+
+                }
+            });
         }
     }
 
@@ -158,13 +177,14 @@ public class HexagoneDisplay {
 
     public void verifyAvailability(){
 
-
+        System.out.println("Je suis très frais");
+        isReservable = true;
         for(RoomDisplay roomDisplay : roomDisplays){
 /*            if(hc.getListReservationOfARoom(roomDisplay.getRoom()).size() > 0 ){
 
                 System.out.println(hc.getListReservationOfARoom(roomDisplay.getRoom()).get(0).getStartDateTime().toString());
             }*/
-            for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration()).entrySet()){
+            for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
 
 
                 if(roomAvailability.getKey().getName().equals(roomDisplay.getRoom().getName())){
