@@ -35,6 +35,8 @@ public class HexagoneApplication extends Application {
             mainPane.getChildren().add(romDisp.getShape());
         }
 
+        mainPane.getChildren().add(hexa.getPane());
+
         Scene scene = new Scene(mainPane, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 
         primaryStage.setScene(scene);

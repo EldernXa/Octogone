@@ -1,14 +1,24 @@
 package fr.hexagone.front;
 
+import fr.hexagone.back.RoomController;
+import fr.hexagone.dao.RoomRepository;
+import fr.hexagone.utility.BeanUtil;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 
+
 public class HexagoneDisplay {
+
+    RoomController rc = BeanUtil.getBean(RoomController.class);
 
     private Polygon shape;
     private final Polygon room1;
@@ -23,6 +33,7 @@ public class HexagoneDisplay {
     private final Polygon room10;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
+    private Pane pane = new Pane();
 
 
     public HexagoneDisplay(){
@@ -57,9 +68,10 @@ public class HexagoneDisplay {
         );
         this.room1.setFill(Color.WHITE);
         this.room1.setStroke(Color.BLACK);
-        this.room1.setOnMouseEntered(mouseEvent -> room1.setFill(Color.RED));
-        this.room1.setOnMouseExited(mouseEvent -> room1.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
+        RoomDisplay roomDisplay = new RoomDisplay(rc.getRoom("H1"),new Coordinate(x,y),this.room1,Color.WHITE);
+        this.roomDisplays.add(roomDisplay);
+        this.room1.setOnMouseEntered(mouseEvent -> pane = roomDisplay.getDiplayPane());
+        this.room1.setOnMouseExited(mouseEvent -> pane = null);
 
         this.room2 = new Polygon();
 
@@ -72,7 +84,7 @@ public class HexagoneDisplay {
         this.room2.setStroke(Color.BLACK);
         this.room2.setOnMouseEntered(mouseEvent -> room2.setFill(Color.RED));
         this.room2.setOnMouseExited(mouseEvent -> room2.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("H2"),new Coordinate(x,y),this.room2,Color.WHITE));
 
 
         this.room3 = new Polygon();
@@ -88,7 +100,7 @@ public class HexagoneDisplay {
         this.room3.setStroke(Color.BLACK);
         this.room3.setOnMouseEntered(mouseEvent -> room3.setFill(Color.RED));
         this.room3.setOnMouseExited(mouseEvent -> room3.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("H3"),new Coordinate(x,y),this.room3,Color.WHITE));
 
         this.room4 = new Polygon();
 
@@ -103,7 +115,7 @@ public class HexagoneDisplay {
         this.room4.setStroke(Color.BLACK);
         this.room4.setOnMouseEntered(mouseEvent -> room4.setFill(Color.RED));
         this.room4.setOnMouseExited(mouseEvent -> room4.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room4,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("H4"),new Coordinate(x,y),this.room4,Color.WHITE));
 
         this.room5 = new Polygon();
 
@@ -117,7 +129,7 @@ public class HexagoneDisplay {
         this.room5.setStroke(Color.BLACK);
         this.room5.setOnMouseEntered(mouseEvent -> room5.setFill(Color.RED));
         this.room5.setOnMouseExited(mouseEvent -> room5.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room5,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("O4"),new Coordinate(x,y),this.room5,Color.WHITE));
 
         this.room6 = new Polygon();
 
@@ -131,7 +143,7 @@ public class HexagoneDisplay {
         this.room6.setStroke(Color.BLACK);
         this.room6.setOnMouseEntered(mouseEvent -> room6.setFill(Color.RED));
         this.room6.setOnMouseExited(mouseEvent -> room6.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room6,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("O8"),new Coordinate(x,y),this.room6,Color.WHITE));
 
         this.room7 = new Polygon();
 
@@ -146,7 +158,7 @@ public class HexagoneDisplay {
         this.room7.setStroke(Color.BLACK);
         this.room7.setOnMouseEntered(mouseEvent -> room7.setFill(Color.RED));
         this.room7.setOnMouseExited(mouseEvent -> room7.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room7,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("P1"),new Coordinate(x,y),this.room7,Color.WHITE));
 
         this.room8 = new Polygon();
 
@@ -160,7 +172,7 @@ public class HexagoneDisplay {
         this.room8.setStroke(Color.BLACK);
         this.room8.setOnMouseEntered(mouseEvent -> room8.setFill(Color.RED));
         this.room8.setOnMouseExited(mouseEvent -> room8.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room8,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("P2"),new Coordinate(x,y),this.room8,Color.WHITE));
 
         this.room9 = new Polygon();
 
@@ -174,7 +186,7 @@ public class HexagoneDisplay {
         this.room9.setStroke(Color.BLACK);
         this.room9.setOnMouseEntered(mouseEvent -> room9.setFill(Color.RED));
         this.room9.setOnMouseExited(mouseEvent -> room9.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room9,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("F2"),new Coordinate(x,y),this.room9,Color.WHITE));
 
         this.room10 = new Polygon();
 
@@ -188,11 +200,15 @@ public class HexagoneDisplay {
         this.room10.setStroke(Color.BLACK);
         this.room10.setOnMouseEntered(mouseEvent -> room10.setFill(Color.RED));
         this.room10.setOnMouseExited(mouseEvent -> room10.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room10,null,Color.WHITE));
+        this.roomDisplays.add(new RoomDisplay(rc.getRoom("F3"),new Coordinate(x,y),this.room10,Color.WHITE));
 
 
     }
 
+
+    public Pane getPane() {
+        return pane;
+    }
 
     public Polygon getForme() {
         return shape;
