@@ -5,6 +5,9 @@ import fr.hexagone.front.RoomDisplay;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
@@ -26,14 +29,17 @@ public class HexagoneApplication extends Application {
         primaryStage.setTitle("Héxagone réservation");
         primaryStage.setMaximized(true);
 
-        HexagoneDisplay hexa = new HexagoneDisplay();
-
         Pane mainPane = new Pane();
+        HexagoneDisplay hexa = new HexagoneDisplay(mainPane);
+
         mainPane.getChildren().add(hexa.getForme());
 
         for(RoomDisplay romDisp : hexa.getSallesAffichages()){
             mainPane.getChildren().add(romDisp.getShape());
         }
+
+
+        System.out.println(mainPane.getChildren().get(mainPane.getChildren().size()-1));
 
         Scene scene = new Scene(mainPane, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 
