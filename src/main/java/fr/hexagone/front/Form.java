@@ -59,7 +59,7 @@ public class Form extends GridPane {
 
 
 
-        button.addEventHandler(MouseEvent.MOUSE_ENTERED,
+        button.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     datePicker.setValue(datePicker.getConverter()
                             .fromString(datePicker.getEditor().getText()));
