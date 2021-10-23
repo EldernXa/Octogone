@@ -1,17 +1,13 @@
 package fr.hexagone.front;
 
 import fr.hexagone.back.RoomController;
-import fr.hexagone.dao.RoomRepository;
 import fr.hexagone.utility.BeanUtil;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 
@@ -20,6 +16,7 @@ public class HexagoneDisplay {
 
     RoomController rc = BeanUtil.getBean(RoomController.class);
 
+    private Pane mainPane;
     private Polygon shape;
     private final Polygon room1;
     private final Polygon room2;
@@ -33,10 +30,11 @@ public class HexagoneDisplay {
     private final Polygon room10;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
-    private Pane pane = new Pane();
 
 
-    public HexagoneDisplay(){
+    public HexagoneDisplay(Pane mainPane){
+
+        this.mainPane = mainPane;
 
         double x = Screen.getPrimary().getBounds().getWidth()/2;
         double y =  Screen.getPrimary().getBounds().getHeight()/2;
@@ -70,8 +68,21 @@ public class HexagoneDisplay {
         this.room1.setStroke(Color.BLACK);
         RoomDisplay roomDisplay = new RoomDisplay(rc.getRoom("H1"),new Coordinate(x,y),this.room1,Color.WHITE);
         this.roomDisplays.add(roomDisplay);
-        this.room1.setOnMouseEntered(mouseEvent -> pane = roomDisplay.getDiplayPane());
-        this.room1.setOnMouseExited(mouseEvent -> pane = null);
+        Rectangle rectangle = new Rectangle(200,300);
+        this.room1.setOnMouseEntered(mouseEvent -> {
+            mainPane.getChildren().add(roomDisplay.getDisplayPane());
+            rectangle.setFill(Color.BLACK);
+            rectangle.setX(0);
+            rectangle.setY(0);
+            mainPane.getChildren().add(rectangle);
+            System.out.println("Ajout");
+        });
+
+        this.room1.setOnMouseExited(mouseEvent -> {
+            mainPane.getChildren().remove(roomDisplay.getDisplayPane());
+            mainPane.getChildren().remove(rectangle);
+            System.out.println("Retrait");
+        });
 
         this.room2 = new Polygon();
 
@@ -203,11 +214,6 @@ public class HexagoneDisplay {
         this.roomDisplays.add(new RoomDisplay(rc.getRoom("F3"),new Coordinate(x,y),this.room10,Color.WHITE));
 
 
-    }
-
-
-    public Pane getPane() {
-        return pane;
     }
 
     public Polygon getForme() {

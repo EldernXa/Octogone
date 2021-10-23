@@ -1,21 +1,16 @@
 package fr.hexagone.front;
 
-import fr.hexagone.model.Reservation;
 import fr.hexagone.model.Room;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
 
 public class RoomDisplay {
 
     private final Room room;
-    Pane diplayPane;
+    Pane displayPane;
     private final Coordinate coordinate;
     private final Polygon shape;
     private final Label nameRoom;
@@ -23,7 +18,7 @@ public class RoomDisplay {
 
     public RoomDisplay(Room room, Coordinate coordinate, Polygon shape, Color colorRoom){
         this.room = room;
-        this.diplayPane = createPane();
+        this.displayPane = updatePane();
         this.coordinate = coordinate;
         this.shape = shape;
         this.nameRoom = new Label(this.room.getName());
@@ -32,9 +27,11 @@ public class RoomDisplay {
         this.shape.setLayoutY(this.getY());
     }
 
-    public Pane createPane(){
+    public Pane updatePane(){
+
         Pane pane = new Pane();
-        VBox vBox = new VBox();
+        pane.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
+        /*VBox vBox = new VBox();
         pane.setPrefSize(450,500);
         Label nameRoom = new Label(this.room.getName());
         Label capacity = new Label(Integer.toString(room.getCapacity()));
@@ -47,7 +44,9 @@ public class RoomDisplay {
 
         scrollPane.setContent(gridPane);
         vBox.getChildren().addAll(nameRoom,capacity,scrollPane);
-        pane.getChildren().add(vBox);
+        pane.getChildren().add(vBox);*/
+        pane.setLayoutX(0);
+        pane.setLayoutY(0);
 
         return pane;
     }
@@ -64,7 +63,8 @@ public class RoomDisplay {
         return shape;
     }
 
-    public Pane getDiplayPane() {
-        return diplayPane;
+    public Pane getDisplayPane() {
+        this.displayPane = updatePane();
+        return displayPane;
     }
 }
