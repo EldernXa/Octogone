@@ -68,19 +68,16 @@ public class HexagoneDisplay {
         this.room1.setStroke(Color.BLACK);
         RoomDisplay roomDisplay = new RoomDisplay(rc.getRoom("H1"),new Coordinate(x,y),this.room1,Color.WHITE);
         this.roomDisplays.add(roomDisplay);
-        Rectangle rectangle = new Rectangle(200,300);
+
         this.room1.setOnMouseEntered(mouseEvent -> {
-            mainPane.getChildren().add(roomDisplay.getDisplayPane());
-            rectangle.setFill(Color.BLACK);
-            rectangle.setX(0);
-            rectangle.setY(0);
-            mainPane.getChildren().add(rectangle);
+            mainPane.getChildren().add(roomDisplay.getAndUpdateDisplayPane());
+            System.out.println("Taille de la liste : " + mainPane.getChildren().size());
             System.out.println("Ajout");
         });
 
         this.room1.setOnMouseExited(mouseEvent -> {
             mainPane.getChildren().remove(roomDisplay.getDisplayPane());
-            mainPane.getChildren().remove(rectangle);
+            System.out.println("Taille de la liste : " + mainPane.getChildren().size());
             System.out.println("Retrait");
         });
 
