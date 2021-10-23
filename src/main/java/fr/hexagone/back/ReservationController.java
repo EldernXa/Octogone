@@ -54,7 +54,7 @@ public class ReservationController {
                 r.getStartDateTime().getMonth(),r.getStartDateTime().getDayOfMonth(),
                 r.getStartDateTime().getHour(),r.getStartDateTime().getMinute());
 
-        for(Map.Entry<Room, Availability> mapEntry : hexaController.listAvailabilityRoom(localDateTime, 2).entrySet()){
+        for(Map.Entry<Room, Availability> mapEntry : hexaController.listAvailabilityRoom(localDateTime, 2, 8).entrySet()){
             System.out.println(mapEntry.getKey().getName() + " " + mapEntry.getValue());
         }
     }
