@@ -34,8 +34,9 @@ public class HexagoneApplication extends Application {
 
         mainPane.getChildren().add(hexa.getForme());
 
-        for(RoomDisplay romDisp : hexa.getSallesAffichages()){
-            mainPane.getChildren().add(romDisp.getShape());
+        for(RoomDisplay roomDisp : hexa.getRoomDisplays()){
+            mainPane.getChildren().add(roomDisp.getShape());
+//            mainPane.getChildren().add(roomDisp.getLabelNameRoomFix());
         }
 
 

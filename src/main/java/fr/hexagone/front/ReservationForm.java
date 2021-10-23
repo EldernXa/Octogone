@@ -144,7 +144,7 @@ public class ReservationForm extends GridPane {
     public void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hexagone");
-        alert.setHeaderText("Réservation confirmée à " + localDateTime.getHour() + ":" + localDateTime.getMinute() + " le "
+        alert.setHeaderText("Réservation confirmée à  " + localDateTime.getHour() + ":" + localDateTime.getMinute() + " le "
                 + localDateTime.getDayOfMonth() +"/"+localDateTime.getMonthValue()+"/"+localDateTime.getYear() +" dans la salle " + room.getName());
 
         alert.showAndWait();
