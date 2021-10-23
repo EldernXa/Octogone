@@ -10,6 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
+
+import java.awt.*;
 
 public class RoomDisplay {
 
@@ -22,7 +25,7 @@ public class RoomDisplay {
 
     public RoomDisplay(Room room, Coordinate coordinate, Polygon shape, Color colorRoom){
         this.room = room;
-        this.displayPane = updatePane();
+//        this.displayPane = updatePane();
         this.coordinate = coordinate;
         this.shape = shape;
         this.nameRoom = new Label(this.room.getName());
@@ -37,6 +40,7 @@ public class RoomDisplay {
         VBox vBox = new VBox();
         pane.setPrefSize(300,300);
         pane.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE,null,null)));
+        pane.setBorder(new Border(new BorderStroke(Color.BLACK,null,null,new BorderWidths(20))));
         Label nameRoom = new Label("Nom de la salle : " + this.room.getName());
         Label capacity = new Label("Capacité de la salle : " + Integer.toString(room.getCapacity()));
         GridPane gridPane = new GridPane();
@@ -51,10 +55,52 @@ public class RoomDisplay {
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.setPadding(new Insets(30));
         pane.getChildren().add(vBox);
-        pane.setLayoutX(0);
-        pane.setLayoutY(0);
+        pane.setLayoutX(calculPosPopUp().getX());//calculPosPopUp().getX()
+        pane.setLayoutY(calculPosPopUp().getY());//calculPosPopUp().getY()
+
+        System.out.println();
 
         return pane;
+    }
+
+    private Point calculPosPopUp(){
+        Point point = new Point();
+
+        double sCX = Screen.getPrimary().getVisualBounds().getWidth()/2;
+        double sCY = Screen.getPrimary().getVisualBounds().getHeight()/2;
+
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+
+        double maxY = -Double.MAX_VALUE;
+        double maxX = -Double.MAX_VALUE;
+
+        for(int i = 0; i < this.shape.getPoints().size(); i++){
+            if(i%2 == 0){
+                if(this.shape.getPoints().get(i) > maxX){
+                    System.out.println("X supp");
+                    maxX = this.shape.getPoints().get(i);
+                }
+                if(this.shape.getPoints().get(i) < minX){
+                    System.out.println("X inf");
+                    minX = this.shape.getPoints().get(i);
+                }
+            }
+            else{
+                if(this.shape.getPoints().get(i) > maxY){
+                    System.out.println("Y supp");
+                    maxY = this.shape.getPoints().get(i);
+                }
+                if(this.shape.getPoints().get(i) < minY){
+                    System.out.println("Y inf");
+                    minY = this.shape.getPoints().get(i);
+                }
+            }
+        }
+
+        point.setLocation(maxX+sCX,maxY+sCY);
+
+        return point;
     }
 
     public double getX(){
