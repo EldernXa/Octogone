@@ -14,6 +14,9 @@ import javafx.stage.Screen;
 import java.awt.*;
 import java.time.LocalDateTime;
 
+/**
+ * Classe permettant de représenter les inforamtions relatives à l'affichage des salles
+ */
 public class RoomDisplay {
 
     private Room room;
@@ -41,6 +44,12 @@ public class RoomDisplay {
 //        this.labelNameRoomFix.setTranslateY(calculPosLabel().getY());
     }
 
+    /**
+     * Met à jour les information relatives aux infos bulles, comme le numéro de la salle,
+     * sa capacité ainsi que la liste des reservations pour la journée de cette dernèr.
+     * Permet également de positionner l'infobulle graphiquement.
+     * @return
+     */
     private StackPane updatePane() {
 
         StackPane pane = new StackPane();
@@ -94,6 +103,11 @@ public class RoomDisplay {
         return pane;
     }
 
+    /**
+     * Calcul la position de l'infobulle en fonction des coordonnées de la salle et du mileu de l'écran
+     * @return
+     */
+
     private Point calculPosPopUp() {
         Point point = new Point();
 
@@ -129,6 +143,10 @@ public class RoomDisplay {
         return point;
     }
 
+    /**
+     * Calcul la postion des label des Salle (ne fonctnionne pas)
+     * @return
+     */
     private Point calculPosLabel() {
         Point point = new Point();
 
@@ -168,6 +186,10 @@ public class RoomDisplay {
         return colorRoom;
     }
 
+    /**
+     * Permet de choisir quoi faire lors du passage de la souris sur une salle
+     * @throws Exception
+     */
     public void setHoverColor() throws Exception{
         Color currentColor = this.getColorRoom();
 
@@ -190,7 +212,10 @@ public class RoomDisplay {
         this.shape.setFill(this.getColorRoom());
     }
 
-
+    /**
+     * Permet de choisir quoi faire lorsque la souris n'est plus sur une salle
+     * @throws Exception
+     */
     public void setUnHoverColor() throws Exception{
         Color currentColor = this.getColorRoom();
 
