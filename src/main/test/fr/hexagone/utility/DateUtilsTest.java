@@ -48,6 +48,16 @@ class DateUtilsTest {
 
     @Test
     void isOverlapping() {
+        LocalDateTime start1 = LocalDateTime.of(2021, 12, 20, 13, 0, 0);
+        LocalDateTime end1 = LocalDateTime.of(2021, 12, 20, 14, 0, 0);
 
+        LocalDateTime start2 = LocalDateTime.of(2021, 12, 20, 13, 30, 0);
+        LocalDateTime end2 = LocalDateTime.of(2021, 12, 20, 15, 0, 0);
+
+        LocalDateTime start3 = LocalDateTime.of(2021, 12, 21, 13, 0, 0);
+        LocalDateTime end3 = LocalDateTime.of(2021, 12, 21, 14, 0, 0);
+
+        assertTrue(DateUtils.isOverlapping(start1, end1, start2, end2));
+        assertFalse(DateUtils.isOverlapping(start1, end1, start3, end3));
     }
 }

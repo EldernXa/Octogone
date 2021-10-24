@@ -46,6 +46,10 @@ class Room {
         this.features = Arrays.asList(features);
     }
 
+    /**
+     * Affecte une réservation à la salle
+     * @param r la réservation
+     */
     public void addReservation(Reservation r){
         reservations.add(r);
     }

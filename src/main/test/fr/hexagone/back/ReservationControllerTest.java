@@ -11,8 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-// TODO: utiliser une différente bdd pour les tests
-
 @SpringBootTest
 @ContextConfiguration(classes = Starter.class)
 class ReservationControllerTest {

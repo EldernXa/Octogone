@@ -80,7 +80,14 @@ public class RoomController {
         return reservations;
     }
 
-    // TODO: tester /!\
+    /**
+     * Tente de reserver la salle
+     * @param roomId id de la salle
+     * @param email adresse mail
+     * @param startDateTime date de début de la reservation
+     * @param duration durée de la reservation
+     * @return résultat de la tentative de réservation
+     */
     public BookRoomResult bookRoom(int roomId, String email, LocalDateTime startDateTime, int duration) {
 
         if (!email.matches("^.+@([a-z]+\\.)?univ-amu\\.fr$"))

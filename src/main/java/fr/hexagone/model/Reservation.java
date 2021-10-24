@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public @Data @NoArgsConstructor class Reservation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -43,18 +44,39 @@ public @Data @NoArgsConstructor class Reservation {
         this.room = room;
     }
 
+    /**
+     * Retourne la date de fin d'une reservation
+     * @param startDateTime date du début de la reservation
+     * @param duration durée de la reservation
+     * @return date de fin
+     */
     public static LocalDateTime getEndDateTime(LocalDateTime startDateTime, int duration) {
         return DateUtils.addMinutes(startDateTime, duration * 30L);
     }
 
+    /**
+     * Retourne vrai si deux reservations se chevauchent
+     * @param r1 reservation 1
+     * @param r2 reservation 2
+     * @return vrai/faux
+     */
     public static boolean isOverlapping(Reservation r1, Reservation r2) {
         return DateUtils.isOverlapping(r1.getStartDateTime(), r1.getEndDateTime(), r2.getStartDateTime(), r2.getEndDateTime());
     }
 
+    /**
+     * Retorune vrai si une reservation tiers chevauchent l'instance en cours
+     * @param r reservation tiers
+     * @return vrai/faux
+     */
     public boolean isOverlapping(Reservation r) {
         return isOverlapping(this, r);
     }
 
+    /**
+     * Retourne la date de fin de l'instance de la reservation en cours
+     * @return date de fin
+     */
     public LocalDateTime getEndDateTime() {
         return getEndDateTime(getStartDateTime(), getDuration());
     }

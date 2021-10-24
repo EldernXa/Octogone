@@ -15,6 +15,12 @@ public class BeanUtil implements ApplicationContextAware {
         context = applicationContext;
     }
 
+    /**
+     * Retourne l'instance de la classe gérée par Spring
+     * @param beanClass classe
+     * @param <T> type
+     * @return instance gérée par spring
+     */
     public static <T> T getBean(Class<T> beanClass) {
         return context.getBean(beanClass);
     }
