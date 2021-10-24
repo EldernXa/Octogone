@@ -171,7 +171,14 @@ public class HexagoneDisplay {
                 if (reservationForm != null){
                     reservationForm.close();
                 }
-                if(isReservable){
+
+                boolean isRoomAvailable = false;
+                for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
+                    if(roomDisplays.get(finalI).getRoom().getName().equals(roomAvailability.getKey().getName()) && roomAvailability.getValue() == Availability.AVAILABLE){
+                        isRoomAvailable = true;
+                    }
+                }
+                if(isReservable && isRoomAvailable){
                     reservationForm = new ReservationForm(roomDisplays.get(finalI).getRoom(),form.getLocalDateTime(),form.getDuration());
                     this.reservationForm.getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, z ->{
                         verifyAvailability();
@@ -186,16 +193,11 @@ public class HexagoneDisplay {
 
 
     public void verifyAvailability(){
-
-        System.out.println("Je suis très frais");
         isReservable = true;
+
         for(RoomDisplay roomDisplay : roomDisplays){
-/*            if(hc.getListReservationOfARoom(roomDisplay.getRoom()).size() > 0 ){
 
-                System.out.println(hc.getListReservationOfARoom(roomDisplay.getRoom()).get(0).getStartDateTime().toString());
-            }*/
             for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
-
 
                 if(roomAvailability.getKey().getName().equals(roomDisplay.getRoom().getName())){
 
@@ -212,8 +214,6 @@ public class HexagoneDisplay {
                         case NOT_YET :
                             roomDisplay.setColorRoom(Color.RED);
                             break;
-
-
                     }
                     break;
                 }
