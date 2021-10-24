@@ -5,6 +5,7 @@ import fr.hexagone.back.HexagoneController;
 import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -16,9 +17,6 @@ import javafx.stage.WindowEvent;
 import java.util.ArrayList;
 import java.util.Map;
 
-/**
- * Permet la creation graphique de l'hexagone et de toutes les salles qui le compose
- */
 
 public class HexagoneDisplay {
 
@@ -38,11 +36,6 @@ public class HexagoneDisplay {
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
 
-    /**
-     * Construit l'hexagone (sa forme) ainsi que les salles qui le composent
-     * et les ajoute au mainPane pour les rendre visibles
-     * @param mainPane
-     */
     public HexagoneDisplay(Pane mainPane){
 
         this.mainPane = mainPane;
@@ -168,10 +161,6 @@ public class HexagoneDisplay {
 
     }
 
-    /**
-     * Initialise les différentes salles, decide de leur style visuel
-     * ainsi que des actions lors du passage de la souris dessus
-     */
     private void initRooms(){
 
         String[] roomNames = {"H1","H2","H3","H4","O4","O8","P1","P2","F2","F3"}; //TODO Recuperer toutes les salles d'une coup
@@ -214,6 +203,7 @@ public class HexagoneDisplay {
                         if(roomDisplays.get(finalI).getRoom().getName().equals(roomAvailability.getKey().getName()) && roomAvailability.getValue() == Availability.AVAILABLE){
                             isRoomAvailable = true;
                         }
+
                     }
 
                     if(isRoomAvailable){
@@ -226,6 +216,9 @@ public class HexagoneDisplay {
 
 
 
+                }
+                else {
+                    showAlert("Veuillez séléctionner les données de réservation et valider");
                 }
             });
         }
@@ -265,10 +258,14 @@ public class HexagoneDisplay {
         }
     }
 
-    /**
-     * Recupère la forme de l'hexagone
-     * @return
-     */
+
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Hexagone");
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
+
     public Polygon getForme() {
         return shape;
     }
@@ -277,10 +274,6 @@ public class HexagoneDisplay {
         this.shape = shape;
     }
 
-    /**
-     * Récupère la liste des salle qui composent l'hexagone
-     * @return
-     */
     public ArrayList<RoomDisplay> getRoomDisplays() {
         return roomDisplays;
     }
