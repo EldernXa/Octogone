@@ -2,7 +2,6 @@ package fr.hexagone.front;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,7 +22,7 @@ public class Form extends GridPane {
     private LocalDateTime localDateTime;
     private int seats;
     private int duration;
-    private  Button button;
+    private final Button button;
 
 
 

@@ -4,7 +4,6 @@ import fr.hexagone.back.BookRoomResult;
 import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -14,20 +13,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.time.LocalDateTime;
 
 public class ReservationForm extends GridPane {
 
     private String mail;
-    private Button validateButton;
     private TextField textField;
-    private Room room;
-    private LocalDateTime localDateTime;
-    private int duration;
-    private Stage stage;
-    private Label labelErr;
+    private final Room room;
+    private final LocalDateTime localDateTime;
+    private final int duration;
+    private final Stage stage;
+    private final Label labelErr;
 
 
     public ReservationForm(Room room, LocalDateTime localDateTime, int duration) {
@@ -51,10 +48,6 @@ public class ReservationForm extends GridPane {
         stage.show();
     }
 
-    public void closeRequest(EventHandler<WindowEvent> eventHandler){
-        stage.setOnCloseRequest(eventHandler);
-    }
-
     public void mailForm(){
 
         textField = new TextField();
@@ -67,7 +60,7 @@ public class ReservationForm extends GridPane {
     public void validateButton(){
 
 
-        validateButton = new Button("Valider");
+        Button validateButton = new Button("Valider");
         this.add(validateButton,0,7);
         validateButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -114,7 +107,7 @@ public class ReservationForm extends GridPane {
         this.add(new Label("Durée "),0,5);
         this.add(new Label("Places "),0,6);
 
-        StringBuilder features = new StringBuilder("");
+        StringBuilder features = new StringBuilder();
         for (String string : room.getFeatures()){
 
             features.append(string).append(", ");
