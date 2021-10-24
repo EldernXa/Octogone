@@ -153,7 +153,7 @@ public class HexagoneDisplay {
 
         String[] roomNames = {"H1","H2","H3","H4","O4","O8","P1","P2","F2","F3"}; //TODO Recuperer toutes les salles d'une coup
         for(int i = 0; i < 10 ; i++){
-            this.roomDisplays.add(new RoomDisplay(rc.getRoom(roomNames[i]), new Coordinate(x,y),new Polygon()));
+            this.roomDisplays.add(new RoomDisplay(rc.getRoom(roomNames[i]), new Coordinate(x,y),new Polygon(),this.form));
             this.roomDisplays.get(i).getShape().setFill(Color.WHITE);
             this.roomDisplays.get(i).getShape().setStroke(Color.BLACK);
 

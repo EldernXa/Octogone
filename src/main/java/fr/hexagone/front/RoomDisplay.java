@@ -1,7 +1,9 @@
 package fr.hexagone.front;
 
 import fr.hexagone.back.HexagoneController;
+import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
+import fr.hexagone.utility.BeanUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,23 +12,28 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
+import net.bytebuddy.asm.Advice;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 
 public class RoomDisplay {
 
     private Room room;
+    private RoomController rc = BeanUtil.getBean(RoomController.class);
     private StackPane displayPane;
     private Label labelNameRoomFix;
     private final Coordinate coordinate;
     private final Polygon shape;
     private Color colorRoom;
+    private Form form;
 
-    public RoomDisplay(Room room, Coordinate coordinate, Polygon shape) {
+    public RoomDisplay(Room room, Coordinate coordinate, Polygon shape, Form form) {
         this.room = room;
         this.coordinate = coordinate;
         this.shape = shape;
         this.labelNameRoomFix = new Label(this.room.getName());
+        this.form = form;
 
         setColorRoom(Color.WHITE);
 
@@ -56,13 +63,21 @@ public class RoomDisplay {
         gridPane.add(new Label("Fin"),2,1);
         gridPane.add( new Label("Durée"),3,1);
 
-        for (int i = 0; i < room.getReservationsOfWeek().size(); i++) {
+        LocalDateTime localDateTime = form.getLocalDateTime();
+
+        if(localDateTime == null){
+            localDateTime = LocalDateTime.now();
+        }
+
+        for (int i = 0; i < rc.getReservationsOfWeek(room,localDateTime).size(); i++) {
 //            System.out.println("Je rentre : " + i);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getIdLbl(),0,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getStartDateLbl(),1,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getEndDateLbl(),2,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getDurationLbl(),3,i+2);
         }
+
+
 
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);

@@ -54,16 +54,7 @@ class Room {
         reservations.add(r);
     }
 
-    public List<Reservation> getReservationsOfWeek(){
-        List<Reservation> reservations = new ArrayList<>();
-        for (Reservation r : this.reservations){
-            if(DateUtils.isSameWeek(r.getStartDateTime(), LocalDateTime.now())){
-                reservations.add(r);
-            }
 
-        }
-        return reservations;
-    }
 
 
 

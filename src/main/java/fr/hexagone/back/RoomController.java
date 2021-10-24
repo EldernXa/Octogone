@@ -119,6 +119,17 @@ public class RoomController {
         return BookRoomResult.OK;
     }
 
+    public List<Reservation> getReservationsOfWeek(Room room,LocalDateTime localDateTime){
+        List<Reservation> reservations = new ArrayList<>();
+        for (Reservation r : room.getReservations()){
+            if(DateUtils.isSameWeek(r.getStartDateTime(), localDateTime)){
+                reservations.add(r);
+            }
+
+        }
+        return reservations;
+    }
+
 
 
 
