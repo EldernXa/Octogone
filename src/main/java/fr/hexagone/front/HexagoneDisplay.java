@@ -1,27 +1,46 @@
 package fr.hexagone.front;
 
-import javafx.event.EventHandler;
+import fr.hexagone.back.Availability;
+import fr.hexagone.back.HexagoneController;
+import fr.hexagone.back.RoomController;
+import fr.hexagone.model.Room;
+import fr.hexagone.utility.BeanUtil;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
+import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 
 public class HexagoneDisplay {
 
+    RoomController rc = BeanUtil.getBean(RoomController.class);
+    HexagoneController hc = BeanUtil.getBean(HexagoneController.class);
+
+    double x = Screen.getPrimary().getBounds().getWidth()/2;
+    double y =  Screen.getPrimary().getBounds().getHeight()/2;
+
+    private Pane mainPane;
     private Polygon shape;
-    private final Polygon room1;
-    private final Polygon room2;
-    private final Polygon room3;
+    private Form form;
+    private  ReservationForm reservationForm;
+    private boolean isReservable = false;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
 
-    public HexagoneDisplay(){
+    public HexagoneDisplay(Pane mainPane){
 
-        double x = Screen.getPrimary().getBounds().getWidth()/2;
-        double y =  Screen.getPrimary().getBounds().getHeight()/2;
+        this.mainPane = mainPane;
+
+        this.form = new Form();
+
+        this.mainPane.getChildren().add(form);
+
 
         this.shape =  new Polygon();
 
@@ -41,51 +60,157 @@ public class HexagoneDisplay {
             shape.setStroke(Color.RED);
         });
 
-        this.room1 = new Polygon();
+        initRooms();
 
-        room1.getPoints().addAll(
+        roomDisplays.get(0).getShape().getPoints().addAll(
                 0., -297.5,
                 0.,-225.,
                 Math.sqrt(3)/2*150-2.5,-225.
         );
-        this.room1.setFill(Color.WHITE);
-        this.room1.setStroke(Color.BLACK);
-        this.room1.setOnMouseEntered(mouseEvent -> room1.setFill(Color.RED));
-        this.room1.setOnMouseExited(mouseEvent -> room1.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room1,null,Color.WHITE));
 
-        this.room2 = new Polygon();
-
-        room2.getPoints().addAll(
+        roomDisplays.get(1).getShape().getPoints().addAll(
                 0., -297.5,
                 0.,-225.,
                 -Math.sqrt(3)/2*150+2.5,-225.
         );
-        this.room2.setFill(Color.WHITE);
-        this.room2.setStroke(Color.BLACK);
-        this.room2.setOnMouseEntered(mouseEvent -> room2.setFill(Color.RED));
-        this.room2.setOnMouseExited(mouseEvent -> room2.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room2,null,Color.WHITE));
 
-
-        this.room3 = new Polygon();
-
-        room3.getPoints().addAll(
+        roomDisplays.get(2).getShape().getPoints().addAll(
                 -Math.sqrt(3)/2*150+2.5,-225.,
                 -(Math.sqrt(3)/2*150+2.5)/2,-225.,
                 -(Math.sqrt(3)/2*150+2.5)/2,-150.,
                 -Math.sqrt(3)/2*300+2.5,-150.
-
         );
-        this.room3.setFill(Color.WHITE);
-        this.room3.setStroke(Color.BLACK);
-        this.room3.setOnMouseEntered(mouseEvent -> room3.setFill(Color.RED));
-        this.room3.setOnMouseExited(mouseEvent -> room3.setFill(Color.WHITE));
-        this.roomDisplays.add(new RoomDisplay(new Coordinate(x,y),this.room3,null,Color.WHITE));
+
+        roomDisplays.get(3).getShape().getPoints().addAll(
+                -Math.sqrt(3)/2*300+2.5,-150.,
+                -150.,-150.,
+                -150.,0.,
+                -Math.sqrt(3)/2*300+2.5,0.
+        );
+
+        roomDisplays.get(4).getShape().getPoints().addAll(
+                -Math.sqrt(3)/2*300+2.5,0.,
+                -150.,0.,
+                -150.,150.,
+                -Math.sqrt(3)/2*300+2.5,150.
+        );
+
+        roomDisplays.get(5).getShape().getPoints().addAll(
+                Math.sqrt(3)/2*150-2.5,-225.,
+                (Math.sqrt(3)/2*150+2.5)/2,-225.,
+                (Math.sqrt(3)/2*150+2.5)/2,-150.,
+                Math.sqrt(3)/2*300-2.5,-150.
+        );
+
+        roomDisplays.get(6).getShape().getPoints().addAll(
+                Math.sqrt(3)/2*300-2.5,-150.,
+                150.,-150.,
+                150.,0.,
+                Math.sqrt(3)/2*300-2.5,0.
+        );
+
+        roomDisplays.get(7).getShape().getPoints().addAll(
+                Math.sqrt(3)/2*300-2.5,0.,
+                150.,0.,
+                150.,150.,
+                Math.sqrt(3)/2*300-2.5,150.
+        );
+
+        roomDisplays.get(8).getShape().getPoints().addAll(
+                -Math.sqrt(3)/2*150+2.5,225.,
+                -(Math.sqrt(3)/2*150-2.5)/2,225.,
+                -(Math.sqrt(3)/2*150-2.5)/2,150.,
+                -Math.sqrt(3)/2*300+2.5,150.
+        );
+
+        roomDisplays.get(9).getShape().getPoints().addAll(
+                Math.sqrt(3)/2*150-2.5,225.,
+                (Math.sqrt(3)/2*150+2.5)/2,225.,
+                (Math.sqrt(3)/2*150+2.5)/2,150.,
+                Math.sqrt(3)/2*300-2.5,150.
+        );
+
+        this.form.getButton().addEventHandler(MouseEvent.MOUSE_CLICKED,e ->{
+            verifyAvailability();
+        });
+
+
 
 
     }
 
+    private  void initRooms(){
+
+        String[] roomNames = {"H1","H2","H3","H4","O4","O8","P1","P2","F2","F3"}; //TODO Recuperer toutes les salles d'une coup
+        for(int i = 0; i < 10 ; i++){
+            this.roomDisplays.add(new RoomDisplay(rc.getRoom(roomNames[i]), new Coordinate(x,y),new Polygon()));
+            this.roomDisplays.get(i).getShape().setFill(Color.WHITE);
+            this.roomDisplays.get(i).getShape().setStroke(Color.BLACK);
+
+            int finalI = i;
+
+            this.roomDisplays.get(i).getShape().setOnMouseEntered(mouseEvent -> {
+                mainPane.getChildren().add(this.roomDisplays.get(finalI).getAndUpdateDisplayPane());
+            });
+
+            this.roomDisplays.get(i).getShape().setOnMouseExited(mouseEvent -> {
+                mainPane.getChildren().remove(this.roomDisplays.get(finalI).getDisplayPane());
+            });
+
+            this.roomDisplays.get(i).getShape().setOnMouseClicked(e->{
+                if (reservationForm != null){
+                    reservationForm.close();
+                }
+                if(isReservable){
+                    reservationForm = new ReservationForm(roomDisplays.get(finalI).getRoom(),form.getLocalDateTime(),form.getDuration());
+                    this.reservationForm.getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, z ->{
+                        verifyAvailability();
+                    });
+
+
+                }
+            });
+        }
+    }
+
+
+
+    public void verifyAvailability(){
+
+        System.out.println("Je suis très frais");
+        isReservable = true;
+        for(RoomDisplay roomDisplay : roomDisplays){
+/*            if(hc.getListReservationOfARoom(roomDisplay.getRoom()).size() > 0 ){
+
+                System.out.println(hc.getListReservationOfARoom(roomDisplay.getRoom()).get(0).getStartDateTime().toString());
+            }*/
+            for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
+
+
+                if(roomAvailability.getKey().getName().equals(roomDisplay.getRoom().getName())){
+
+                    switch (roomAvailability.getValue()){
+
+                        case AVAILABLE :
+                            roomDisplay.setColorRoom(Color.GREEN);
+                            break;
+
+                        case SOON:
+                            roomDisplay.setColorRoom(Color.ORANGE);
+                            break;
+
+                        case NOT_YET :
+                            roomDisplay.setColorRoom(Color.RED);
+                            break;
+
+
+                    }
+                    break;
+                }
+            }
+
+        }
+    }
 
     public Polygon getForme() {
         return shape;
@@ -95,24 +220,12 @@ public class HexagoneDisplay {
         this.shape = shape;
     }
 
-    public ArrayList<RoomDisplay> getSallesAffichages() {
+    public ArrayList<RoomDisplay> getRoomDisplays() {
         return roomDisplays;
     }
 
     public void setSallesAffichages(ArrayList<RoomDisplay> roomDisplays) {
         this.roomDisplays = roomDisplays;
-    }
-
-    public Polygon getSalle1() {
-        return room1;
-    }
-
-    public Polygon getSalle2() {
-        return room2;
-    }
-
-    public Polygon getSalle3() {
-        return room3;
     }
 
 }

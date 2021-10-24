@@ -30,15 +30,15 @@ public class ReservationController {
             //reservationRepository.save(new Reservation(roomController.getRoom("H1"), "first@email.fr", LocalDateTime.now(), 2));
             reservationRepository.save(new Reservation(roomController.getRoom("H2"), "first@email.fr", LocalDateTime.of(
                     LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),
-                    15,0
+                    LocalDateTime.now().getHour(),30
             ), 2));
             reservationRepository.save(new Reservation(roomController.getRoom("H2"), "first@email.fr", LocalDateTime.of(
                     LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),
-                    18,0
+                    LocalDateTime.now().getHour() + 1,0
             ), 3));
             reservationRepository.save(new Reservation(roomController.getRoom("H3"), "first@email.fr", LocalDateTime.of(
                     LocalDateTime.now().getYear(), LocalDateTime.now().getMonth(),LocalDateTime.now().getDayOfMonth(),
-                    12,0
+                    LocalDateTime.now().getHour() + 2,0
             ), 5));
         }
 
@@ -54,7 +54,7 @@ public class ReservationController {
                 r.getStartDateTime().getMonth(),r.getStartDateTime().getDayOfMonth(),
                 r.getStartDateTime().getHour(),r.getStartDateTime().getMinute());
 
-        for(Map.Entry<Room, Availability> mapEntry : hexaController.listAvailabilityRoom(localDateTime, 2).entrySet()){
+        for(Map.Entry<Room, Availability> mapEntry : hexaController.listAvailabilityRoom(localDateTime, 2, 8).entrySet()){
             System.out.println(mapEntry.getKey().getName() + " " + mapEntry.getValue());
         }
     }
