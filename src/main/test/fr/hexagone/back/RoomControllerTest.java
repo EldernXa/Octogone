@@ -2,6 +2,7 @@ package fr.hexagone.back;
 
 import fr.hexagone.Starter;
 import fr.hexagone.dao.RoomRepository;
+import fr.hexagone.model.Reservation;
 import fr.hexagone.model.Room;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,41 @@ class RoomControllerTest {
     @Test
     void bookRoom() {
 
-        Room room = new Room("TEST1", 4, "Projecteur");
-        roomRepository.save(room);
+        Room room = roomRepository.findAll().stream().findFirst().orElseThrow();
 
-        LocalDateTime start1 = LocalDateTime.of(2021, 12, 20, 13, 0, 0);
-        LocalDateTime start2 = LocalDateTime.of(2021, 12, 20, 13, 30, 0);
-        LocalDateTime start3 = LocalDateTime.of(2021, 12, 21, 13, 0, 0);
+        LocalDateTime start2000 = LocalDateTime.of(2020, 12, 20, 13, 30, 0);
+        LocalDateTime start2100 = LocalDateTime.of(2100, 12, 20, 13, 0, 0);
+        LocalDateTime start2200 = LocalDateTime.of(2200, 12, 20, 13, 0, 0);
 
+        assertEquals(
+                BookRoomResult.INVALID_MAIL,
+                roomController.bookRoom(room.getId(), "fake@gmail.com", start2100, 1)
+        );
 
-        roomRepository.delete(room);
+        assertEquals(
+                BookRoomResult.OK,
+                roomController.bookRoom(room.getId(), "random@univ-amu.fr", start2100, 2)
+        );
+
+        assertEquals(
+                BookRoomResult.ROOM_NOT_AVAILABLE,
+                roomController.bookRoom(room.getId(), "random@univ-amu.fr", start2100, 2)
+        );
+
+        assertEquals(
+                BookRoomResult.INVALID_DURATION,
+                roomController.bookRoom(room.getId(), "random@univ-amu.fr", start2100, Reservation.MAX_DURATION + 1)
+        );
+
+        assertEquals(
+                BookRoomResult.INVALID_END_DATETIME,
+                roomController.bookRoom(room.getId(), "random@univ-amu.fr", start2000, 2)
+        );
+
+        assertEquals(
+                BookRoomResult.PERSISTANCE_ERROR,
+                roomController.bookRoom(room.getId(), "random@univ-amu.fr@univ-amu.fr", start2200, 2)
+        );
+
     }
 }
