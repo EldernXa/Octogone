@@ -76,7 +76,7 @@ public class  HexagoneController {
 
         if(DateUtils.isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)){
             available = timeForSoonTest != null &&
-                    ChronoUnit.MINUTES.between(timeForSoonTest, date) <= (DURATION_FOR_SOON * 30) &&
+                    Math.abs(ChronoUnit.MINUTES.between(timeForSoonTest, date)) <= (DURATION_FOR_SOON * 30) &&
                     ChronoUnit.MINUTES.between(timeForSoonTest, date) >= 0 ? Availability.SOON : Availability.NOT_YET;
         }
 
