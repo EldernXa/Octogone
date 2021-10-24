@@ -83,6 +83,6 @@ public class DateUtils {
      * @return vrai/faux
      */
     public static boolean isOverlapping(LocalDateTime start1, LocalDateTime end1, LocalDateTime start2, LocalDateTime end2) {
-        return ( start1.isBefore(start2) && end1.isAfter(start2) ) || ( start2.isBefore(start1) && end2.isAfter(start1) );
+        return start1.isBefore(end2) && end1.isAfter(start2);
     }
 }

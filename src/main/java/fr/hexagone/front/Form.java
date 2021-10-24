@@ -2,7 +2,6 @@ package fr.hexagone.front;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,10 +22,12 @@ public class Form extends GridPane {
     private LocalDateTime localDateTime;
     private int seats;
     private int duration;
-    private  Button button;
+    private final Button button;
 
 
-
+    /**
+     * Aligne les differents objets et labels de l'interface dans le GridPane
+     */
     public Form() {
         this.datePicker = new DatePicker(LocalDate.now());
         datePicker.setShowWeekNumbers(false);
@@ -53,11 +54,11 @@ public class Form extends GridPane {
 
     }
 
-
+    /**
+     *Crée un bouton de validation.
+     *Ce bouton récupère les valeurs du calandrier et des comboBow et créer unb LocalDateTime
+     */
     public Button validateButton() {
-
-
-
 
         button.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -88,18 +89,7 @@ public class Form extends GridPane {
                         case "3h":
                             duration =6;
                             break;
-                        case "3h30":
-                            duration =7;
-                            break;
-                        case "4h":
-                            duration =8;
-                            break;
-                        case "4h30":
-                            duration =9;
-                            break;
-                        case "5h":
-                            duration =10;
-                            break;
+
 
 
                     }
@@ -116,6 +106,10 @@ public class Form extends GridPane {
 
     }
 
+
+    /**
+     * Crée les comboBox de l'interface
+     */
     public void comboBoxInit() {
         ObservableList<String> seats =
                 FXCollections.observableArrayList(
@@ -163,11 +157,8 @@ public class Form extends GridPane {
                         "1h30",
                         "2h",
                         "2h30",
-                        "3h",
-                        "3h30",
-                        "4h",
-                        "4h30",
-                        "5h"
+                        "3h"
+
                 );
 
 
