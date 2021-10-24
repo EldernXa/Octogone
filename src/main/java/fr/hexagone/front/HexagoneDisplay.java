@@ -5,8 +5,8 @@ import fr.hexagone.back.HexagoneController;
 import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -31,6 +31,7 @@ public class HexagoneDisplay {
     private Form form;
     private  ReservationForm reservationForm;
     private boolean isReservable = false;
+    private boolean darkTheme = false;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
@@ -58,16 +59,27 @@ public class HexagoneDisplay {
         this.shape.setStroke(Color.BLACK);
         this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 5);
         shape.setOnMouseClicked(mouseEvent -> {
-            Image image = new Image("/batma.png");
+            if(!darkTheme){
+                Image image = new Image("/batma.png");
 
 
-            BackgroundImage backgroundImage = new BackgroundImage(image,
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
+                BackgroundImage backgroundImage = new BackgroundImage(image,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        new BackgroundSize(image.getWidth(),
+                                image.getHeight(),false,false,false,false));
 
-            mainPane.setBackground(new Background(backgroundImage));
-            shape.setFill(Color.BLACK);
-            shape.setStroke(Color.RED);
+                mainPane.setBackground(new Background(backgroundImage));
+                shape.setFill(Color.BLACK);
+                shape.setStroke(Color.RED);
+                this.darkTheme = true;
+            }
+            else {
+                mainPane.setBackground(null);
+                shape.setFill(Color.WHITE);
+                shape.setStroke(Color.BLACK);
+                this.darkTheme = false;
+            }
+
         });
 
         initRooms();
@@ -149,17 +161,18 @@ public class HexagoneDisplay {
 
     }
 
-    private  void initRooms(){
+    private void initRooms(){
 
         String[] roomNames = {"H1","H2","H3","H4","O4","O8","P1","P2","F2","F3"}; //TODO Recuperer toutes les salles d'une coup
         for(int i = 0; i < 10 ; i++){
-            this.roomDisplays.add(new RoomDisplay(rc.getRoom(roomNames[i]), new Coordinate(x,y),new Polygon()));
+            this.roomDisplays.add(new RoomDisplay(rc.getRoom(roomNames[i]), new Coordinate(x,y),new Polygon(),this.form));
             this.roomDisplays.get(i).getShape().setFill(Color.WHITE);
             this.roomDisplays.get(i).getShape().setStroke(Color.BLACK);
 
             int finalI = i;
 
             this.roomDisplays.get(i).getShape().setOnMouseEntered(mouseEvent -> {
+                this.roomDisplays.get(finalI).setRoom(rc.getRoom(this.roomDisplays.get(finalI).getRoom().getName())); /*Recharge la salle*/
                 mainPane.getChildren().add(this.roomDisplays.get(finalI).getAndUpdateDisplayPane());
                 try {
                     this.roomDisplays.get(finalI).setHoverColor();
@@ -190,6 +203,7 @@ public class HexagoneDisplay {
                         if(roomDisplays.get(finalI).getRoom().getName().equals(roomAvailability.getKey().getName()) && roomAvailability.getValue() == Availability.AVAILABLE){
                             isRoomAvailable = true;
                         }
+
                     }
 
                     if(isRoomAvailable){
@@ -202,6 +216,9 @@ public class HexagoneDisplay {
 
 
 
+                }
+                else {
+                    showAlert("Veuillez séléctionner les données de réservation et valider");
                 }
             });
         }
@@ -241,6 +258,18 @@ public class HexagoneDisplay {
         }
     }
 
+
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Hexagone");
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * Recupère la forme de l'hexagone
+     * @return
+     */
     public Polygon getForme() {
         return shape;
     }

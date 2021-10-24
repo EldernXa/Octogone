@@ -84,7 +84,7 @@ public class ReservationForm extends GridPane {
     /**
      * Place les différents objets et labels de l'interface dans le GridPane
      */
-    public  void displayData(){
+    public void displayData(){
 
         String durationDisplay ="";
         switch (duration) {
@@ -121,7 +121,9 @@ public class ReservationForm extends GridPane {
 
             features.append(string).append(", ");
         }
-        features.deleteCharAt(features.length()-2);
+        if(features.length() > 1){
+            features.deleteCharAt(features.length()-2);
+        }
         this.add(new Label(room.getName()),1,1);
         this.add(new Label(features.toString()),1,2);
         this.add(new Label(localDateTime.getDayOfMonth() +"/"+localDateTime.getMonthValue()+"/"+localDateTime.getYear()),1,3);

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.SmartValidator;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +114,17 @@ public class RoomController {
         }
 
         return BookRoomResult.OK;
+    }
+
+    public List<Reservation> getReservationsOfWeek(Room room,LocalDateTime localDateTime){
+        List<Reservation> reservations = new ArrayList<>();
+        for (Reservation r : room.getReservations()){
+            if(DateUtils.isSameWeek(r.getStartDateTime(), localDateTime)){
+                reservations.add(r);
+            }
+
+        }
+        return reservations;
     }
 
 

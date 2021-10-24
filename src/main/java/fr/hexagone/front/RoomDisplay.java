@@ -1,10 +1,10 @@
 package fr.hexagone.front;
 
-import fr.hexagone.back.HexagoneController;
+import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
+import fr.hexagone.utility.BeanUtil;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -12,21 +12,28 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
 
 import java.awt.*;
+import java.time.LocalDateTime;
 
+/**
+ * Classe permettant de représenter les inforamtions relatives à l'affichage des salles
+ */
 public class RoomDisplay {
 
-    private final Room room;
+    private Room room;
+    private RoomController rc = BeanUtil.getBean(RoomController.class);
     private StackPane displayPane;
     private Label labelNameRoomFix;
     private final Coordinate coordinate;
     private final Polygon shape;
     private Color colorRoom;
+    private Form form;
 
-    public RoomDisplay(Room room, Coordinate coordinate, Polygon shape) {
+    public RoomDisplay(Room room, Coordinate coordinate, Polygon shape, Form form) {
         this.room = room;
         this.coordinate = coordinate;
         this.shape = shape;
         this.labelNameRoomFix = new Label(this.room.getName());
+        this.form = form;
 
         setColorRoom(Color.WHITE);
 
@@ -35,7 +42,13 @@ public class RoomDisplay {
 
     }
 
-    public StackPane updatePane() {
+    /**
+     * Met à jour les information relatives aux infos bulles, comme le numéro de la salle,
+     * sa capacité ainsi que la liste des reservations pour la journée de cette dernèr.
+     * Permet également de positionner l'infobulle graphiquement.
+     * @return
+     */
+    private StackPane updatePane() {
 
         StackPane pane = new StackPane();
         pane.setPrefSize(320, 300);
@@ -53,8 +66,13 @@ public class RoomDisplay {
         gridPane.add(new Label("Début"),1,1);
         gridPane.add(new Label("Fin"),2,1);
         gridPane.add( new Label("Durée"),3,1);
+        LocalDateTime localDateTime = form.getLocalDateTime();
 
-        for (int i = 0; i < room.getReservationsOfWeek().size(); i++) {
+        if(localDateTime == null){
+            localDateTime = LocalDateTime.now();
+        }
+
+        for (int i = 0; i < rc.getReservationsOfWeek(room,localDateTime).size(); i++) {
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getIdLbl(),0,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getStartDateLbl(),1,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getEndDateLbl(),2,i+2);
@@ -81,11 +99,16 @@ public class RoomDisplay {
         return pane;
     }
 
+    /**
+     * Calcul la position de l'infobulle en fonction des coordonnées de la salle et du mileu de l'écran
+     * @return
+     */
+
     private Point calculPosPopUp() {
         Point point = new Point();
 
-        double sCX = Screen.getPrimary().getVisualBounds().getWidth() / 2;
-        double sCY = Screen.getPrimary().getVisualBounds().getHeight() / 2;
+        double sCX = Screen.getPrimary().getVisualBounds().getWidth()/2-15;
+        double sCY = Screen.getPrimary().getVisualBounds().getHeight()/2-110;
 
         double minX = Double.MAX_VALUE;
         double minY = Double.MAX_VALUE;
@@ -116,6 +139,10 @@ public class RoomDisplay {
         return point;
     }
 
+    /**
+     * Calcul la postion des label des Salle (ne fonctnionne pas)
+     * @return
+     */
     private Point calculPosLabel() {
         Point point = new Point();
 
@@ -155,6 +182,10 @@ public class RoomDisplay {
         return colorRoom;
     }
 
+    /**
+     * Permet de choisir quoi faire lors du passage de la souris sur une salle
+     * @throws Exception
+     */
     public void setHoverColor() throws Exception{
         Color currentColor = this.getColorRoom();
 
@@ -177,7 +208,10 @@ public class RoomDisplay {
         this.shape.setFill(this.getColorRoom());
     }
 
-
+    /**
+     * Permet de choisir quoi faire lorsque la souris n'est plus sur une salle
+     * @throws Exception
+     */
     public void setUnHoverColor() throws Exception{
         Color currentColor = this.getColorRoom();
 
@@ -242,5 +276,9 @@ public class RoomDisplay {
 
     public Room getRoom() {
         return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }
