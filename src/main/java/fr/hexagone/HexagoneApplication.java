@@ -25,6 +25,7 @@ public class HexagoneApplication extends Application {
     public void start(Stage primaryStage){
         primaryStage.setTitle("Héxagone réservation");
         primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
 
         /**
          * Créer l'object qui contiendra tous les autres objets graphiques

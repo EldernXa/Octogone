@@ -62,11 +62,13 @@ public class HexagoneDisplay {
             if(!darkTheme){
                 Image image = new Image("/batma.png");
 
+                double swidth = Screen.getPrimary().getBounds().getWidth();
+                double sheight = Screen.getPrimary().getBounds().getHeight();
 
                 BackgroundImage backgroundImage = new BackgroundImage(image,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        new BackgroundSize(image.getWidth(),
-                                image.getHeight(),false,false,false,false));
+                        new BackgroundSize(swidth,
+                                sheight,false,false,true,false));
 
                 mainPane.setBackground(new Background(backgroundImage));
                 shape.setFill(Color.BLACK);
