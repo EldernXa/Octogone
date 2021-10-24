@@ -23,7 +23,7 @@ public class HexagoneDisplay {
     RoomController rc = BeanUtil.getBean(RoomController.class);
     HexagoneController hc = BeanUtil.getBean(HexagoneController.class);
 
-    double x = (Screen.getPrimary().getBounds().getWidth()/2-15) ;
+    double x = (Screen.getPrimary().getBounds().getWidth()/2) ;
     double y =  Screen.getPrimary().getBounds().getHeight()/2-110;
 
     private Pane mainPane;
