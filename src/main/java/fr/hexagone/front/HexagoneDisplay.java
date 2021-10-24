@@ -5,6 +5,7 @@ import fr.hexagone.back.HexagoneController;
 import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -202,6 +203,7 @@ public class HexagoneDisplay {
                         if(roomDisplays.get(finalI).getRoom().getName().equals(roomAvailability.getKey().getName()) && roomAvailability.getValue() == Availability.AVAILABLE){
                             isRoomAvailable = true;
                         }
+
                     }
 
                     if(isRoomAvailable){
@@ -214,6 +216,9 @@ public class HexagoneDisplay {
 
 
 
+                }
+                else {
+                    showAlert("Veuillez séléctionner les données de réservation et valider");
                 }
             });
         }
@@ -251,6 +256,14 @@ public class HexagoneDisplay {
             }
 
         }
+    }
+
+
+    public void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Hexagone");
+        alert.setHeaderText(message);
+        alert.showAndWait();
     }
 
     public Polygon getForme() {
