@@ -85,8 +85,8 @@ public class RoomDisplay {
     private Point calculPosPopUp() {
         Point point = new Point();
 
-        double sCX = Screen.getPrimary().getVisualBounds().getWidth() / 2;
-        double sCY = Screen.getPrimary().getVisualBounds().getHeight() / 2;
+        double sCX = Screen.getPrimary().getVisualBounds().getWidth()/2-15;
+        double sCY = Screen.getPrimary().getVisualBounds().getHeight()/2-110;
 
         double minX = Double.MAX_VALUE;
         double minY = Double.MAX_VALUE;
