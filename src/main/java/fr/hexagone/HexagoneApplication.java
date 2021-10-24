@@ -36,11 +36,9 @@ public class HexagoneApplication extends Application {
 
         for(RoomDisplay roomDisp : hexa.getRoomDisplays()){
             mainPane.getChildren().add(roomDisp.getShape());
-//            mainPane.getChildren().add(roomDisp.getLabelNameRoomFix());
         }
 
 
-        System.out.println(mainPane.getChildren().get(mainPane.getChildren().size()-1));
 
         Scene scene = new Scene(mainPane, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 

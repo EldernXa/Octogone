@@ -33,8 +33,6 @@ public class RoomDisplay {
         this.shape.setLayoutX(this.getX());
         this.shape.setLayoutY(this.getY());
 
-//        this.labelNameRoomFix.setTranslateX(calculPosLabel().getX());
-//        this.labelNameRoomFix.setTranslateY(calculPosLabel().getY());
     }
 
     public StackPane updatePane() {
@@ -57,7 +55,6 @@ public class RoomDisplay {
         gridPane.add( new Label("Durée"),3,1);
 
         for (int i = 0; i < room.getReservationsOfWeek().size(); i++) {
-//            System.out.println("Je rentre : " + i);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getIdLbl(),0,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getStartDateLbl(),1,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getEndDateLbl(),2,i+2);
@@ -70,15 +67,15 @@ public class RoomDisplay {
         gridPane.setHgap(10);
         gridPane.setAlignment(Pos.BOTTOM_CENTER);
 
-        vBox.getChildren().addAll(nameRoom, capacity,gridPane);//add scrollpane
+        vBox.getChildren().addAll(nameRoom, capacity,gridPane);
 
         vBox.setAlignment(Pos.TOP_CENTER);
         vBox.setPadding(new Insets(30,10,10,10));
 
         pane.getChildren().addAll(vBox);
 
-        pane.setLayoutX(calculPosPopUp().getX());//calculPosPopUp().getX()
-        pane.setLayoutY(calculPosPopUp().getY());//calculPosPopUp().getY()
+        pane.setLayoutX(calculPosPopUp().getX());
+        pane.setLayoutY(calculPosPopUp().getY());
 
 
         return pane;
