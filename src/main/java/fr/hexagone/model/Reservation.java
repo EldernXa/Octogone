@@ -26,7 +26,6 @@ public @Data @NoArgsConstructor class Reservation {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDateTime;
 
-    // Duration in multiple of 30 minutes (1 = 30 min, 6 = 30 min x 6 = 3 hours)
     @Basic(optional = false)
     @Min(1)
     @Max(6)

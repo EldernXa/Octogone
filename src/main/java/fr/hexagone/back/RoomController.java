@@ -101,7 +101,6 @@ public class RoomController {
         if (request.getEndDateTime().isBefore(LocalDateTime.now())) return BookRoomResult.INVALID_END_DATETIME;
 
         for (Reservation r: room.getReservations()) {
-            System.out.println(r.getEmail() + " : " + r.getStartDateTime() + " - " + r.getEndDateTime());
             if (r.isOverlapping(request)) return BookRoomResult.ROOM_NOT_AVAILABLE;
         }
 
