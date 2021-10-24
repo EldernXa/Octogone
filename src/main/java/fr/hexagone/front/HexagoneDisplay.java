@@ -30,6 +30,7 @@ public class HexagoneDisplay {
     private Form form;
     private  ReservationForm reservationForm;
     private boolean isReservable = false;
+    private boolean darkTheme = false;
 
     private ArrayList<RoomDisplay> roomDisplays = new ArrayList<>();
 
@@ -57,16 +58,27 @@ public class HexagoneDisplay {
         this.shape.setStroke(Color.BLACK);
         this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 5);
         shape.setOnMouseClicked(mouseEvent -> {
-            Image image = new Image("/batma.png");
+            if(!darkTheme){
+                Image image = new Image("/batma.png");
 
 
-            BackgroundImage backgroundImage = new BackgroundImage(image,
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
+                BackgroundImage backgroundImage = new BackgroundImage(image,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        new BackgroundSize(image.getWidth(),
+                                image.getHeight(),false,false,false,false));
 
-            mainPane.setBackground(new Background(backgroundImage));
-            shape.setFill(Color.BLACK);
-            shape.setStroke(Color.RED);
+                mainPane.setBackground(new Background(backgroundImage));
+                shape.setFill(Color.BLACK);
+                shape.setStroke(Color.RED);
+                this.darkTheme = true;
+            }
+            else {
+                mainPane.setBackground(null);
+                shape.setFill(Color.WHITE);
+                shape.setStroke(Color.BLACK);
+                this.darkTheme = false;
+            }
+
         });
 
         initRooms();
