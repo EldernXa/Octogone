@@ -31,7 +31,7 @@ public class ReservationForm extends GridPane {
 
 
     public ReservationForm(Room room, LocalDateTime localDateTime, int duration) {
-        this.setMinSize(300,300);
+        this.setMinSize(500,300);
 
         this.room = room;
         this.localDateTime = localDateTime;
@@ -142,22 +142,22 @@ public class ReservationForm extends GridPane {
                 labelErr.setText("OK");
                 return true;
             case INVALID_END_DATETIME:
-                labelErr.setText("INVALID_END_DATETIME");
+                labelErr.setText("La date de fin ne peut pas être \ndans le passé.");
                 break;
             case INVALID_DURATION:
-                labelErr.setText("INVALID_DURATION");
+                labelErr.setText("Durée invalide.");
                 break;
             case INVALID_ROOM:
-                labelErr.setText("INVALID_ROOM");
+                labelErr.setText("Salle inexistante");
                 break;
             case ROOM_NOT_AVAILABLE:
-                labelErr.setText("ROOM_NOT_AVAILABLE");
+                labelErr.setText("Salle déjà réservée sur ce créneau");
                 break;
             case PERSISTANCE_ERROR:
-                labelErr.setText("PERSISTANCE_ERROR");
+                labelErr.setText("Données invalides");
                 break;
             case INVALID_MAIL:
-                labelErr.setText("INVALID_MAIL");
+                labelErr.setText("Seul les mails universitaires sont autorisés");
                 break;
         }
 
