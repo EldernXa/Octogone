@@ -5,8 +5,10 @@ import fr.hexagone.back.HexagoneController;
 import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Screen;
@@ -21,8 +23,8 @@ public class HexagoneDisplay {
     RoomController rc = BeanUtil.getBean(RoomController.class);
     HexagoneController hc = BeanUtil.getBean(HexagoneController.class);
 
-    double x = Screen.getPrimary().getBounds().getWidth()/2;
-    double y =  Screen.getPrimary().getBounds().getHeight()/2;
+    double x = (Screen.getPrimary().getBounds().getWidth()/2-15) ;
+    double y =  Screen.getPrimary().getBounds().getHeight()/2-110;
 
     private Pane mainPane;
     private Polygon shape;
@@ -56,6 +58,14 @@ public class HexagoneDisplay {
         this.shape.setStroke(Color.BLACK);
         this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 5);
         shape.setOnMouseClicked(mouseEvent -> {
+            Image image = new Image("g:/Users/user1/Desktop/batma.png");
+
+
+            BackgroundImage backgroundImage = new BackgroundImage(image,
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+
+            mainPane.setBackground(new Background(backgroundImage));
             shape.setFill(Color.BLACK);
             shape.setStroke(Color.RED);
         });
@@ -172,17 +182,24 @@ public class HexagoneDisplay {
                     reservationForm.close();
                 }
 
-                boolean isRoomAvailable = false;
-                for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
-                    if(roomDisplays.get(finalI).getRoom().getName().equals(roomAvailability.getKey().getName()) && roomAvailability.getValue() == Availability.AVAILABLE){
-                        isRoomAvailable = true;
+                if(isReservable){
+
+
+                    boolean isRoomAvailable = false;
+                    for(Map.Entry<Room, Availability> roomAvailability : hc.listAvailabilityRoom(form.getLocalDateTime(),form.getDuration(), form.getSeats()).entrySet()){
+                        if(roomDisplays.get(finalI).getRoom().getName().equals(roomAvailability.getKey().getName()) && roomAvailability.getValue() == Availability.AVAILABLE){
+                            isRoomAvailable = true;
+                        }
                     }
-                }
-                if(isReservable && isRoomAvailable){
-                    reservationForm = new ReservationForm(roomDisplays.get(finalI).getRoom(),form.getLocalDateTime(),form.getDuration());
-                    this.reservationForm.getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, z ->{
-                        verifyAvailability();
-                    });
+
+                    if(isRoomAvailable){
+
+                        reservationForm = new ReservationForm(roomDisplays.get(finalI).getRoom(),form.getLocalDateTime(),form.getDuration());
+                        this.reservationForm.getScene().getWindow().addEventHandler(WindowEvent.WINDOW_HIDDEN, z ->{
+                            verifyAvailability();
+                        });
+                    }
+
 
 
                 }
