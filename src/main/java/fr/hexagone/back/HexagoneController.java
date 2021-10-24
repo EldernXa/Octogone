@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +83,6 @@ public class  HexagoneController {
         {
             available = Availability.AVAILABLE;
         }
-
         return available;
     }
 
@@ -100,15 +98,17 @@ public class  HexagoneController {
         LocalDateTime resEndDateTime = reservation.getEndDateTime();
         LocalDateTime localDateTimeAfterDuration = Reservation.getEndDateTime(date, duration);
 
-        LocalDateTime timeForSoonTest = null;
-        if(duration > 1){
-            timeForSoonTest = Reservation.getEndDateTime(reservation.getStartDateTime(), reservation.getDuration() - DURATION_FOR_SOON);
-        }
 
         if(DateUtils.isOverlapping(reservation.getStartDateTime(), resEndDateTime, date, localDateTimeAfterDuration)){
-            available = timeForSoonTest != null &&
-                    Math.abs(ChronoUnit.MINUTES.between(timeForSoonTest, date)) <= (DURATION_FOR_SOON * 30) &&
-                    ChronoUnit.MINUTES.between(timeForSoonTest, date) >= 0 ? Availability.SOON : Availability.NOT_YET;
+            if (date.isEqual(resEndDateTime)) {
+                return null;
+            }
+            LocalDateTime local = Reservation.getEndDateTime(date, DURATION_FOR_SOON);
+            if(!DateUtils.isOverlapping(reservation.getStartDateTime(), resEndDateTime, local, localDateTimeAfterDuration)){
+                available = Availability.SOON;
+            }else {
+                available = Availability.NOT_YET;
+            }
         }
 
         return available;
