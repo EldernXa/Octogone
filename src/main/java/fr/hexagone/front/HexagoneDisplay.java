@@ -266,6 +266,10 @@ public class HexagoneDisplay {
         alert.showAndWait();
     }
 
+    /**
+     * Recupère la forme de l'hexagone
+     * @return
+     */
     public Polygon getForme() {
         return shape;
     }
