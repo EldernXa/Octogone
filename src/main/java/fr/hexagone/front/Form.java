@@ -88,18 +88,7 @@ public class Form extends GridPane {
                         case "3h":
                             duration =6;
                             break;
-                        case "3h30":
-                            duration =7;
-                            break;
-                        case "4h":
-                            duration =8;
-                            break;
-                        case "4h30":
-                            duration =9;
-                            break;
-                        case "5h":
-                            duration =10;
-                            break;
+
 
 
                     }
@@ -163,11 +152,8 @@ public class Form extends GridPane {
                         "1h30",
                         "2h",
                         "2h30",
-                        "3h",
-                        "3h30",
-                        "4h",
-                        "4h30",
-                        "5h"
+                        "3h"
+
                 );
 
 

@@ -151,10 +151,20 @@ public class HexagoneDisplay {
 
             this.roomDisplays.get(i).getShape().setOnMouseEntered(mouseEvent -> {
                 mainPane.getChildren().add(this.roomDisplays.get(finalI).getAndUpdateDisplayPane());
+                try {
+                    this.roomDisplays.get(finalI).setHoverColor();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
 
             this.roomDisplays.get(i).getShape().setOnMouseExited(mouseEvent -> {
                 mainPane.getChildren().remove(this.roomDisplays.get(finalI).getDisplayPane());
+                try {
+                    this.roomDisplays.get(finalI).setUnHoverColor();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
 
             this.roomDisplays.get(i).getShape().setOnMouseClicked(e->{
