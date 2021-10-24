@@ -1,13 +1,10 @@
 # Octogone
 
-Octogone est un logiciel de réservation de salle à l'Hexagone (Luminy).
-
 ## Lancer l'executable
 
 ```bash
 java -jar octogone.jar
 ```
-
 
 
 ## Contributors
