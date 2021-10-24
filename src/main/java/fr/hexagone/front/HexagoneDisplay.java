@@ -191,7 +191,9 @@ public class HexagoneDisplay {
     }
 
 
-
+    /**
+     * Vérifie les disponibilités des salles et change leurs couleurs
+     */
     public void verifyAvailability(){
         isReservable = true;
 

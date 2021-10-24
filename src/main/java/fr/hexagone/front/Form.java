@@ -25,7 +25,9 @@ public class Form extends GridPane {
     private final Button button;
 
 
-
+    /**
+     * Aligne les differents objets et labels de l'interface dans le GridPane
+     */
     public Form() {
         this.datePicker = new DatePicker(LocalDate.now());
         datePicker.setShowWeekNumbers(false);
@@ -52,11 +54,11 @@ public class Form extends GridPane {
 
     }
 
-
+    /**
+     *Crée un bouton de validation.
+     *Ce bouton récupère les valeurs du calandrier et des comboBow et créer unb LocalDateTime
+     */
     public Button validateButton() {
-
-
-
 
         button.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -104,6 +106,10 @@ public class Form extends GridPane {
 
     }
 
+
+    /**
+     * Crée les comboBox de l'interface
+     */
     public void comboBoxInit() {
         ObservableList<String> seats =
                 FXCollections.observableArrayList(
