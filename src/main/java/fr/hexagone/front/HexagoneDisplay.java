@@ -149,7 +149,7 @@ public class HexagoneDisplay {
 
     }
 
-    private  void initRooms(){
+    private void initRooms(){
 
         String[] roomNames = {"H1","H2","H3","H4","O4","O8","P1","P2","F2","F3"}; //TODO Recuperer toutes les salles d'une coup
         for(int i = 0; i < 10 ; i++){
@@ -160,6 +160,7 @@ public class HexagoneDisplay {
             int finalI = i;
 
             this.roomDisplays.get(i).getShape().setOnMouseEntered(mouseEvent -> {
+                this.roomDisplays.get(finalI).setRoom(rc.getRoom(this.roomDisplays.get(finalI).getRoom().getName())); /*Recharge la salle*/
                 mainPane.getChildren().add(this.roomDisplays.get(finalI).getAndUpdateDisplayPane());
                 try {
                     this.roomDisplays.get(finalI).setHoverColor();

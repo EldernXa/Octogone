@@ -84,7 +84,7 @@ public class ReservationForm extends GridPane {
     /**
      * Place les différents objets et labels de l'interface dans le GridPane
      */
-    public  void displayData(){
+    public void displayData(){
 
         String durationDisplay ="";
         switch (duration) {

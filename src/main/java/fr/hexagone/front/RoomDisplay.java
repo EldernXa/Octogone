@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class RoomDisplay {
 
-    private final Room room;
+    private Room room;
     private StackPane displayPane;
     private Label labelNameRoomFix;
     private final Coordinate coordinate;
@@ -37,7 +37,7 @@ public class RoomDisplay {
 //        this.labelNameRoomFix.setTranslateY(calculPosLabel().getY());
     }
 
-    public StackPane updatePane() {
+    private StackPane updatePane() {
 
         StackPane pane = new StackPane();
         pane.setPrefSize(320, 300);
@@ -63,8 +63,6 @@ public class RoomDisplay {
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getEndDateLbl(),2,i+2);
             gridPane.add(new ReservationDisplay(room.getReservations().get(i)).getDurationLbl(),3,i+2);
         }
-
-
 
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
@@ -245,5 +243,9 @@ public class RoomDisplay {
 
     public Room getRoom() {
         return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }
