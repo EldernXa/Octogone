@@ -58,7 +58,7 @@ public class HexagoneDisplay {
         this.shape.setStroke(Color.BLACK);
         this.shape.setStrokeWidth(this.shape.getStrokeWidth() + 5);
         shape.setOnMouseClicked(mouseEvent -> {
-            Image image = new Image("g:/Users/user1/Desktop/batma.png");
+            Image image = new Image("/batma.png");
 
 
             BackgroundImage backgroundImage = new BackgroundImage(image,
