@@ -48,6 +48,9 @@ public class ReservationForm extends GridPane {
         stage.show();
     }
 
+    /**
+     * Crée le textField et le label pour renter le mail
+     */
     public void mailForm(){
 
         textField = new TextField();
@@ -56,7 +59,10 @@ public class ReservationForm extends GridPane {
 
     }
 
-
+    /**
+     *Crée un bouton de validation.
+     *Ce bouton récupère les valeurs du textField et ferme la fenêtre en affichant un message de confirmation
+     */
     public void validateButton(){
 
 
@@ -75,6 +81,9 @@ public class ReservationForm extends GridPane {
         this.add(labelErr,3,0);
     }
 
+    /**
+     * Place les différents objets et labels de l'interface dans le GridPane
+     */
     public  void displayData(){
 
         String durationDisplay ="";
@@ -121,11 +130,17 @@ public class ReservationForm extends GridPane {
         this.add(new Label(String.valueOf(room.getCapacity())),1,6);
     }
 
-
+    /**
+     * Ferme la fenêtre de réservation
+     */
     public void close(){
         stage.close();
     }
 
+    /**
+     * Réserve la salle et gère le erreurs
+     * @return vrai si il n'y a pas d'erreur et faux si une des conditions est invalide
+     */
     public boolean control(){
         RoomController roomController = BeanUtil.getBean(RoomController.class);
         BookRoomResult bookRoomResult = roomController.bookRoom(room.getId(),mail,localDateTime,duration);
@@ -158,6 +173,9 @@ public class ReservationForm extends GridPane {
 
     }
 
+    /**
+     * Crée une alerte qui affiche les données de la reservation une fois qu'elle est confirmée
+     */
     public void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Hexagone");
@@ -168,7 +186,10 @@ public class ReservationForm extends GridPane {
     }
 
 
-
+    /**
+     * Renvoit un string pour avoir un affichage des minutes plus esththétique
+     * @return
+     */
     public String goodHourFormat(){
 
         if( localDateTime.getMinute() == 0){
