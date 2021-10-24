@@ -6,7 +6,6 @@ import fr.hexagone.back.RoomController;
 import fr.hexagone.model.Room;
 import fr.hexagone.utility.BeanUtil;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.SmartValidator;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
