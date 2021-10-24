@@ -75,7 +75,14 @@ public class RoomController {
         return reservations;
     }
 
-    // TODO: tester /!\
+    /**
+     * Tente de reserver la salle
+     * @param roomId id de la salle
+     * @param email adresse mail
+     * @param startDateTime date de début de la reservation
+     * @param duration durée de la reservation
+     * @return résultat de la tentative de réservation
+     */
     public BookRoomResult bookRoom(int roomId, String email, LocalDateTime startDateTime, int duration) {
         Room room = roomRepository.findById(roomId);
         if (room == null) return BookRoomResult.INVALID_ROOM;
